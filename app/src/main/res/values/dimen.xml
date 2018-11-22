@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="radius">36dp</dimen>
+    <dimen name="set_layout_width">72dp</dimen>
+
+</resources>

@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context=".ui.activity.GameActivity">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:id="@+id/first_player_scroll"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:background="@color/firstPlayerBackground"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/first_player_set_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="8dp"
+                    android:orientation="vertical"
+                    tools:layout_editor_absoluteX="156dp"
+                    tools:layout_editor_absoluteY="203dp">
+
+                    <LinearLayout
+                        android:id="@+id/first_player_layout_queen"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:orientation="horizontal">
+
+                        <com.example.frankito.hive.ui.view.HexaElement
+                            android:id="@+id/temp_hexa"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                        </com.example.frankito.hive.ui.view.HexaElement>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/first_player_layout_ant"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:orientation="horizontal">
+
+                        <com.example.frankito.hive.ui.view.HexaElement
+                            android:id="@+id/temp_hexa2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                        </com.example.frankito.hive.ui.view.HexaElement>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/first_player_layout_stagbeetle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:orientation="horizontal">
+
+                        <com.example.frankito.hive.ui.view.HexaElement
+                            android:id="@+id/temp_hexa3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp">
+
+                        </com.example.frankito.hive.ui.view.HexaElement>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/first_player_layout_spider"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:orientation="horizontal">
+
+                        <com.example.frankito.hive.ui.view.HexaElement
+                            android:id="@+id/temp_hexa4"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                        </com.example.frankito.hive.ui.view.HexaElement>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/first_player_layout_grasshopper"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="4dp"
+                        android:orientation="horizontal">
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+        <ScrollView
+            android:id="@+id/second_player_scroll"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:background="@color/secondPlayerBackground"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.42">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/second_player_set_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="8dp"
+                    android:orientation="vertical"
+                    tools:layout_editor_absoluteX="156dp"
+                    tools:layout_editor_absoluteY="203dp">
+
+                    <LinearLayout
+                        android:id="@+id/second_player_layout_queen"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:orientation="horizontal">
+
+                        <com.example.frankito.hive.ui.view.HexaElement
+                            android:id="@+id/temp_hexa"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                        </com.example.frankito.hive.ui.view.HexaElement>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/second_player_layout_ant"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:orientation="horizontal">
+
+                        <com.example.frankito.hive.ui.view.HexaElement
+                            android:id="@+id/temp_hexa2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                        </com.example.frankito.hive.ui.view.HexaElement>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/second_player_layout_stagbeetle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:orientation="horizontal">
+
+                        <com.example.frankito.hive.ui.view.HexaElement
+                            android:id="@+id/temp_hexa3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp">
+
+                        </com.example.frankito.hive.ui.view.HexaElement>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/second_player_layout_spider"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:orientation="horizontal">
+
+                        <com.example.frankito.hive.ui.view.HexaElement
+                            android:id="@+id/temp_hexa4"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                        </com.example.frankito.hive.ui.view.HexaElement>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/second_player_layout_grasshopper"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="4dp"
+                        android:orientation="horizontal">
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/backgroundBlue"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/second_player_scroll"
+            app:layout_constraintStart_toEndOf="@+id/first_player_scroll"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.example.frankito.hive.ui.view.HexaViewGroup
+                android:id="@+id/hexa_grid"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </com.example.frankito.hive.ui.view.HexaViewGroup>
+        </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+
+</LinearLayout>

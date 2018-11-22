@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorDisabledRed">#E16452</color>
+    <color name="lightGray">#f2f2f2</color>
+    <color name="recyclerBackgroundGray">#E7E7E7</color>
+    <color name="backgroundGray">#BBBBBB</color>
+    <color name="darkGray">#757575</color>
+    <color name="dark">#9D9592</color>
+    <color name="homeTabLayout">#e9e9e9</color>
+    <color name="filterButtonGreen">#87C770</color>
+    <color name="tabIndicator">#fadd40</color>
+
+    <color name="colorPrimary">#F4942E</color>
+    <color name="colorPrimaryDark">#d07e26</color>
+    <color name="colorAccent">#b56d1f</color>
+    <color name="colorDisabled">#f3b775</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="background">#F2F2F2</color>
+
+    <color name="splashBackground">#F8FEF6</color>
+    <color name="splashTitle">#f2942d</color>
+    <color name="splashText">#639651</color>
+    <color name="splashPagerInactive">#9b948f</color>
+    <color name="splashPagerActive">#c94a29</color>
+
+    <color name="tutorialBackground">#f0e1e1</color>
+
+    <color name="budgetDiagramActive">#82CEC2</color>
+    <color name="budgetDiagramInActive">#ada7a3</color>
+
+    <color name="summaryRed">#dd595b</color>
+    <color name="summaryGreen">#3b9c4d</color>
+    <color name="summaryLight">#b8a79b</color>
+    <color name="summaryDark">#9b948f</color>
+
+    <color name="regularText">#3E3E3E</color>
+    <color name="errorText">#E16452</color>
+    <color name="successText">#87C770</color>
+    <color name="facebookBlue">#104aa8</color>
+    <color name="googleRed">#cc4343</color>
+
+    <color name="backgroundBlue">#EEEEEE</color>
+    <color name="mapBackground">#39CCCC</color>
+    <color name="secondPlayerBackground">#7FDBFF</color>
+    <color name="firstPlayerBackground">#0074D9</color>
+
+
+
+</resources>
+
