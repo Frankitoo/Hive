@@ -2,12 +2,14 @@ package com.example.frankito.hive.ui.view
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Matrix
 import android.graphics.Point
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.util.Log
-import android.view.*
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.LinearLayout
 import com.example.frankito.hive.R
 import com.example.frankito.hive.util.ColorizedDrawable
@@ -33,40 +35,16 @@ class HexaViewGroup : ViewGroup {
     private var mPosX: Float = 0.toFloat()
     private var mPosY: Float = 0.toFloat()
 
-    private val mTranslateMatrix = Matrix()
-    private val mTranslateMatrixInverse = Matrix()
-
     private var mLastTouchX: Float = 0.toFloat()
     private var mLastTouchY: Float = 0.toFloat()
-
-    private var mDispatchTouchEventWorkingArray = FloatArray(2)
-    private var mOnTouchEventWorkingArray = FloatArray(2)
 
     private var viewArray: ArrayList<LinearLayout>
 
     init {
-        mTranslateMatrix.setTranslate(0F, 0F)
         viewArray = ArrayList()
     }
 
-    private fun scaledPointsToScreenPoints(a: FloatArray): FloatArray {
-        mTranslateMatrix.mapPoints(a)
-        return a
-    }
-
-    private fun screenPointsToScaledPoints(a: FloatArray): FloatArray {
-        mTranslateMatrixInverse.mapPoints(a)
-        return a
-    }
-
     private fun mTouchEvent(ev: MotionEvent) {
-
-        mOnTouchEventWorkingArray[0] = ev.x
-        mOnTouchEventWorkingArray[1] = ev.y
-
-        //mOnTouchEventWorkingArray = scaledPointsToScreenPoints(mOnTouchEventWorkingArray)
-
-        //ev.setLocation(mOnTouchEventWorkingArray[0], mOnTouchEventWorkingArray[1])
 
         val action = ev.action
         when (action and MotionEvent.ACTION_MASK) {
@@ -93,9 +71,6 @@ class HexaViewGroup : ViewGroup {
 
                 mPosX += dx
                 mPosY += dy
-
-                //mTranslateMatrix.preTranslate(dx, dy)
-                //mTranslateMatrix.invert(mTranslateMatrixInverse)
 
                 mLastTouchX = x
                 mLastTouchY = y
@@ -130,8 +105,7 @@ class HexaViewGroup : ViewGroup {
 
     override fun dispatchDraw(canvas: Canvas) {
         canvas.save()
-        // canvas.translate(mPosX, mPosY)
-
+        //canvas.translate(mPosX, mPosY)
         for (it in viewArray) {
             it.translationX = mPosX
             it.translationY = mPosY
@@ -140,20 +114,11 @@ class HexaViewGroup : ViewGroup {
         super.dispatchDraw(canvas)
         canvas.restore()
     }
-/*
-    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
-        mDispatchTouchEventWorkingArray[0] = ev.x
-        mDispatchTouchEventWorkingArray[1] = ev.y
-        mDispatchTouchEventWorkingArray = screenPointsToScaledPoints(mDispatchTouchEventWorkingArray)
-        ev.setLocation(mDispatchTouchEventWorkingArray[0], mDispatchTouchEventWorkingArray[1])
-        return super.dispatchTouchEvent(ev)
-    }
-*/
+
     override fun onTouchEvent(ev: MotionEvent): Boolean {
         mTouchEvent(ev)
         return true
     }
-
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
         Log.d("onBoard", "board.onlayout called with size $mSize l: $l r: $r t: $t b: $b")
