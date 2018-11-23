@@ -6,8 +6,11 @@ import android.support.v7.app.AppCompatActivity
 import android.view.*
 import android.widget.LinearLayout
 import com.example.frankito.hive.R
+import com.example.frankito.hive.manager.GameManager
 import com.example.frankito.hive.ui.view.HexaElement
 import com.example.frankito.hive.ui.view.HexaViewGroup
+import com.example.frankito.hive.ui.view.Insects.Ant
+import com.example.frankito.hive.ui.view.Insects.Queen
 import com.example.frankito.hive.util.Constants
 import kotlinx.android.synthetic.main.activity_game.*
 
@@ -49,17 +52,28 @@ class GameActivity : AppCompatActivity() {
         viewHolder.firstPlayerLayoutStagbeetle.setOnDragListener(MyDragListener())
         viewHolder.firstPlayerLayoutQueen.setOnDragListener(MyDragListener())
 
-        temp_hexa.bugType = Constants.ANT
-        temp_hexa.backGround = Constants.DARKGROUND
-        temp_hexa.setOnTouchListener(MyTouchListener())
-        temp_hexa2.bugType = Constants.ANT
-        temp_hexa2.backGround = Constants.LIGHTGROUND
-        temp_hexa2.setOnTouchListener(MyTouchListener())
+        val gameManager = GameManager(hexa_grid, this@GameActivity)
 
-        val hexaElement = HexaElement(this@GameActivity)
-        hexaElement.backGround = Constants.LIGHTGROUND
-        hexaElement.bugType = Constants.QUEEN
-        first_player_set_layout.addView(hexaElement)
+        val playerOneViews = ArrayList<HexaElement>()
+        val playerTwoViews = ArrayList<HexaElement>()
+
+        val ant = Ant(this@GameActivity)
+        ant.whichPlayer = HexaElement.WhichPlayer.PLAYERONE
+        val queen = Queen(this@GameActivity)
+        queen.whichPlayer = HexaElement.WhichPlayer.PLAYERTWO
+
+        first_player_layout_ant.addView(ant)
+        first_player_layout_queen.addView(queen)
+
+        playerOneViews.add(ant)
+        playerTwoViews.add(queen)
+
+        gameManager.playerOneViews = playerOneViews
+        gameManager.playerTwoViews = playerTwoViews
+
+        gameManager.enablePlayerOneViews()
+        gameManager.enablePlayerTwoViews()
+
     }
 
     inner class MyTouchListener : View.OnTouchListener {

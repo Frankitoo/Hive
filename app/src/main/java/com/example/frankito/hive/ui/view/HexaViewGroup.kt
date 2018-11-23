@@ -38,7 +38,7 @@ class HexaViewGroup : ViewGroup {
     private var mLastTouchX: Float = 0.toFloat()
     private var mLastTouchY: Float = 0.toFloat()
 
-    private var viewArray: ArrayList<LinearLayout>
+    var viewArray: ArrayList<LinearLayout>
 
     init {
         viewArray = ArrayList()
