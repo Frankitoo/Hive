@@ -44,4 +44,8 @@ abstract class HexaElement : CustomView {
         setOnDragListener(DisableDragListener(context))
     }
 
+    fun enableDragListener() {
+        setOnDragListener(EnableChildDragListener(context))
+    }
+
 }

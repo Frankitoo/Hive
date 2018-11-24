@@ -65,6 +65,7 @@ class GameActivity : AppCompatActivity() {
         queen.whichPlayer = HexaElement.WhichPlayer.PLAYERTWO
 
         ant.disableDragListener()
+        ant2.enableDragListener()
 
         first_player_layout_ant.addView(ant)
         first_player_layout_ant.addView(ant2)
