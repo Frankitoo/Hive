@@ -65,6 +65,12 @@ class GameActivity : AppCompatActivity() {
         gameManager.droppedAt(row, col)
     }
 
+    override fun onResume() {
+        setPlayerOneTurn()
+        GameManager.firstMove = true
+        super.onResume()
+    }
+
     private fun initLayouts() {
 
         playerOneLayouts = ArrayList()

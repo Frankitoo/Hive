@@ -26,16 +26,7 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
     }
 
     var playerOneViews: ArrayList<HexaElement>? = null
-        set(value) {
-            field = value
-
-        }
-
     var playerTwoViews: ArrayList<HexaElement>? = null
-        set(value) {
-            field = value
-
-        }
 
     fun initGame() {
         playerOneViews = ArrayList()
@@ -54,6 +45,38 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
     fun setPlayerTwoTurn() {
         enablePlayerTwoViews()
         disablePlayerOneViews()
+    }
+
+    fun droppedAt(row: Int, col: Int) {
+
+        if (firstMove) {
+            hexaViewGroup.disableDragListenersForViews()
+            firstMove = false
+        }
+
+        val tempHexaCellOwn = getArrayElementByRowCol(row - 1, col + 1)
+
+        val tempHexaCell1 = getArrayElementByRowCol(row - 1, col + 1)
+        val tempHexaCell2 = getArrayElementByRowCol(row, col + 1)
+        val tempHexaCell3 = getArrayElementByRowCol(row + 1, col)
+        val tempHexaCell4 = getArrayElementByRowCol(row + 1, col + -1)
+        val tempHexaCell5 = getArrayElementByRowCol(row, col - 1)
+        val tempHexaCell6 = getArrayElementByRowCol(row - 1, col)
+
+        val cellsArray = ArrayList<HexaCell>()
+        cellsArray.add(tempHexaCellOwn)
+        cellsArray.add(tempHexaCell1)
+        cellsArray.add(tempHexaCell2)
+        cellsArray.add(tempHexaCell3)
+        cellsArray.add(tempHexaCell4)
+        cellsArray.add(tempHexaCell5)
+        cellsArray.add(tempHexaCell6)
+
+        for (it in cellsArray) {
+            it.layout.background = ColorizedDrawable.getColorizedDrawable(context, R.drawable.darkground, ContextCompat.getColor(context, R.color.colorPrimary))
+            it.layout.setOnDragListener(MyDragListener(context, it.row, it.col))
+        }
+
     }
 
     private fun disablePlayerOneViews() {
@@ -144,37 +167,6 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
         activity.insertInsectToLayout(hexaElement)
     }
 
-    fun droppedAt(row: Int, col: Int) {
-
-        if (firstMove){
-            hexaViewGroup.disableDragListenersForViews()
-            firstMove = false
-        }
-
-        val tempHexaCellOwn = getArrayElementByRowCol(row - 1, col + 1)
-
-        val tempHexaCell1 = getArrayElementByRowCol(row - 1, col + 1)
-        val tempHexaCell2 = getArrayElementByRowCol(row, col + 1)
-        val tempHexaCell3 = getArrayElementByRowCol(row + 1, col)
-        val tempHexaCell4 = getArrayElementByRowCol(row + 1, col + -1)
-        val tempHexaCell5 = getArrayElementByRowCol(row, col - 1)
-        val tempHexaCell6 = getArrayElementByRowCol(row - 1, col)
-
-        val cellsArray = ArrayList<HexaCell>()
-        cellsArray.add(tempHexaCellOwn)
-        cellsArray.add(tempHexaCell1)
-        cellsArray.add(tempHexaCell2)
-        cellsArray.add(tempHexaCell3)
-        cellsArray.add(tempHexaCell4)
-        cellsArray.add(tempHexaCell5)
-        cellsArray.add(tempHexaCell6)
-
-        for (it in cellsArray) {
-            it.layout.background = ColorizedDrawable.getColorizedDrawable(context, R.drawable.darkground, ContextCompat.getColor(context, R.color.colorPrimary))
-            it.layout.setOnDragListener(MyDragListener(context, it.row, it.col))
-        }
-
-    }
 
     private fun getArrayElementByRowCol(row: Int, col: Int): HexaCell {
         val index = row * HexaViewGroup.mSize + col
