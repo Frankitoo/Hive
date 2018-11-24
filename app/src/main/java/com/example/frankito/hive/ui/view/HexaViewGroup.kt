@@ -220,7 +220,7 @@ class HexaViewGroup : ViewGroup {
 
         setDragListenersForViews()
 
-        mPosX = -1500F
+        mPosX = -1800F
         mPosY = -1000F
 
         invalidate()

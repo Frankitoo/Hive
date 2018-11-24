@@ -5,6 +5,9 @@ import android.view.DragEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import com.example.frankito.hive.manager.GameManager
+import com.example.frankito.hive.ui.activity.GameActivity
+import com.example.frankito.hive.ui.view.HexaElement
 
 class EnableChildDragListener(val context : Context) : View.OnDragListener {
 
@@ -27,6 +30,8 @@ class EnableChildDragListener(val context : Context) : View.OnDragListener {
                 container.addView(view)
                 view.visibility = View.VISIBLE
                 view.setOnTouchListener(MyTouchListener())
+
+                turnNextPlayer()
             }
             DragEvent.ACTION_DRAG_ENDED -> {
 
@@ -36,5 +41,18 @@ class EnableChildDragListener(val context : Context) : View.OnDragListener {
             }
         }// do nothing
         return true
+    }
+
+    private fun turnNextPlayer(){
+        val parentActivity = context as GameActivity
+
+        when (GameManager.currentPlayer) {
+            HexaElement.WhichPlayer.PLAYERONE -> {
+                parentActivity.setPlayerTwoTurn()
+            }
+            HexaElement.WhichPlayer.PLAYERTWO -> {
+                parentActivity.setPlayerOneTurn()
+            }
+        }
     }
 }

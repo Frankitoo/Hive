@@ -5,7 +5,6 @@ import com.example.frankito.hive.ui.activity.GameActivity
 import com.example.frankito.hive.ui.view.HexaElement
 import com.example.frankito.hive.ui.view.HexaViewGroup
 import com.example.frankito.hive.ui.view.Insects.*
-import kotlinx.android.synthetic.main.activity_game.*
 
 class GameManager(val hexaViewGroup: HexaViewGroup, val context: Context) {
 
@@ -15,6 +14,9 @@ class GameManager(val hexaViewGroup: HexaViewGroup, val context: Context) {
         val NUMBER_OF_QUEENS = 1
         val NUMBER_OF_STAGBEETLES = 2
         val NUMBER_OF_GRASSHOPPERS = 3
+
+        var currentPlayer : HexaElement.WhichPlayer = HexaElement.WhichPlayer.PLAYERONE
+
     }
 
     var playerOneViews: ArrayList<HexaElement>? = null
@@ -31,11 +33,21 @@ class GameManager(val hexaViewGroup: HexaViewGroup, val context: Context) {
 
     fun initGame() {
 
-        playerOneViews = ArrayList<HexaElement>()
-        playerTwoViews = ArrayList<HexaElement>()
+        playerOneViews = ArrayList()
+        playerTwoViews = ArrayList()
 
         insertViewsToLayouts()
 
+    }
+
+    fun setPlayerOneTurn(){
+        enablePlayerOneViews()
+        disablePlayerTwoViews()
+    }
+
+    fun setPlayerTwoTurn(){
+        enablePlayerTwoViews()
+        disablePlayerOneViews()
     }
 
     private fun disablePlayerOneViews() {

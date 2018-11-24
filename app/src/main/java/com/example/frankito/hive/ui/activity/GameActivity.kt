@@ -1,9 +1,8 @@
 package com.example.frankito.hive.ui.activity
 
-import android.content.ClipData
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.view.*
+import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import com.example.frankito.hive.R
@@ -43,8 +42,10 @@ class GameActivity : AppCompatActivity() {
         internal val secondPlayerLayoutGrasshopper = findViewById<LinearLayout>(R.id.second_player_layout_grasshopper)
     }
 
-    private lateinit var playerOneViews: ArrayList<LinearLayout>
-    private lateinit var playerTwoViews: ArrayList<LinearLayout>
+    private lateinit var playerOneLayouts: ArrayList<LinearLayout>
+    private lateinit var playerTwoLayouts: ArrayList<LinearLayout>
+
+    private lateinit var gameManager: GameManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,16 +56,15 @@ class GameActivity : AppCompatActivity() {
 
         initLayouts()
 
-        val gameManager = GameManager(viewHolder.hexaGrid, this@GameActivity)
-
+        gameManager = GameManager(viewHolder.hexaGrid, this@GameActivity)
         gameManager.initGame()
 
     }
 
     private fun initLayouts() {
 
-        playerOneViews = ArrayList()
-        playerTwoViews = ArrayList()
+        playerOneLayouts = ArrayList()
+        playerTwoLayouts = ArrayList()
 
         viewHolder.firstPlayerLayoutStagbeetle.setOnClickListener {
             setPlayerOneTurn()
@@ -79,29 +79,29 @@ class GameActivity : AppCompatActivity() {
         viewHolder.secondPlayerScrollView.setOnDragListener(DisableDragListener(this@GameActivity))
         viewHolder.hexaLayout.setOnDragListener(DisableDragListener(this@GameActivity))
 
-        playerOneViews.add(viewHolder.firstPlayerLayoutAnt)
-        playerOneViews.add(viewHolder.firstPlayerLayoutGrasshopper)
-        playerOneViews.add(viewHolder.firstPlayerLayoutSpider)
-        playerOneViews.add(viewHolder.firstPlayerLayoutStagbeetle)
-        playerOneViews.add(viewHolder.firstPlayerLayoutQueen)
+        playerOneLayouts.add(viewHolder.firstPlayerLayoutAnt)
+        playerOneLayouts.add(viewHolder.firstPlayerLayoutGrasshopper)
+        playerOneLayouts.add(viewHolder.firstPlayerLayoutSpider)
+        playerOneLayouts.add(viewHolder.firstPlayerLayoutStagbeetle)
+        playerOneLayouts.add(viewHolder.firstPlayerLayoutQueen)
 
-        playerTwoViews.add(viewHolder.secondPlayerLayoutAnt)
-        playerTwoViews.add(viewHolder.secondPlayerLayoutGrasshopper)
-        playerTwoViews.add(viewHolder.secondPlayerLayoutSpider)
-        playerTwoViews.add(viewHolder.secondPlayerLayoutStagbeetle)
-        playerTwoViews.add(viewHolder.secondPlayerLayoutQueen)
+        playerTwoLayouts.add(viewHolder.secondPlayerLayoutAnt)
+        playerTwoLayouts.add(viewHolder.secondPlayerLayoutGrasshopper)
+        playerTwoLayouts.add(viewHolder.secondPlayerLayoutSpider)
+        playerTwoLayouts.add(viewHolder.secondPlayerLayoutStagbeetle)
+        playerTwoLayouts.add(viewHolder.secondPlayerLayoutQueen)
 
         val radius = resources.getDimension(R.dimen.radius)
         val height = 2 * radius
         val layoutParams = LinearLayout.LayoutParams(height.toInt(), height.toInt())
         layoutParams.setMargins(0, 0, 0, 8)
 
-        for (it in playerOneViews) {
+        for (it in playerOneLayouts) {
             it.layoutParams = layoutParams
             it.setOnDragListener(DisableDragListener(this@GameActivity))
         }
 
-        for (it in playerTwoViews) {
+        for (it in playerTwoLayouts) {
             it.layoutParams = layoutParams
             it.setOnDragListener(DisableDragListener(this@GameActivity))
         }
@@ -109,13 +109,21 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun setPlayerOneTurn() {
+
         viewHolder.firstPlayerScrollView.alpha = 1F
         viewHolder.secondPlayerScrollView.alpha = 0.5F
+
+        gameManager.setPlayerOneTurn()
+
     }
 
     fun setPlayerTwoTurn() {
+
         viewHolder.firstPlayerScrollView.alpha = 0.5F
         viewHolder.secondPlayerScrollView.alpha = 1F
+
+        gameManager.setPlayerTwoTurn()
+
     }
 
 
