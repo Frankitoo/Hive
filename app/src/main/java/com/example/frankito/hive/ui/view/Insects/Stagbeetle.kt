@@ -23,10 +23,6 @@ class Stagbeetle : HexaElement {
                 view_hexa_element_image.setImageDrawable(ColorizedDrawable.getColorizedDrawable(context, R.drawable.stagbeetle, ContextCompat.getColor(context, R.color.white)))
                 view_hexa_element_layout.background = ContextCompat.getDrawable(context, R.drawable.darkground)
             }
-            else->{
-                view_hexa_element_image.setImageDrawable(ColorizedDrawable.getColorizedDrawable(context, R.drawable.stagbeetle, ContextCompat.getColor(context, R.color.white)))
-                view_hexa_element_layout.background = ContextCompat.getDrawable(context, R.drawable.ground)
-            }
         }
     }
 

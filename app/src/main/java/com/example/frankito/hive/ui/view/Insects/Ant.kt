@@ -14,7 +14,10 @@ class Ant : HexaElement {
     constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet)
 
     override fun setElementPlayerType(whichPlayer: WhichPlayer) {
-        when(whichPlayer){
+        view_hexa_element_image.scaleX = 0.85F
+        view_hexa_element_image.scaleY = 0.85F
+
+        when (whichPlayer) {
             WhichPlayer.PLAYERONE -> {
                 view_hexa_element_image.setImageDrawable(ColorizedDrawable.getColorizedDrawable(context, R.drawable.ant, ContextCompat.getColor(context, R.color.black)))
                 view_hexa_element_layout.background = ContextCompat.getDrawable(context, R.drawable.lightground)
@@ -22,10 +25,6 @@ class Ant : HexaElement {
             WhichPlayer.PLAYERTWO -> {
                 view_hexa_element_image.setImageDrawable(ColorizedDrawable.getColorizedDrawable(context, R.drawable.ant, ContextCompat.getColor(context, R.color.white)))
                 view_hexa_element_layout.background = ContextCompat.getDrawable(context, R.drawable.darkground)
-            }
-            else->{
-                view_hexa_element_image.setImageDrawable(ColorizedDrawable.getColorizedDrawable(context, R.drawable.ant, ContextCompat.getColor(context, R.color.white)))
-                view_hexa_element_layout.background = ContextCompat.getDrawable(context, R.drawable.ground)
             }
         }
     }
