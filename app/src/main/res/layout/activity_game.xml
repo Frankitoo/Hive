@@ -15,7 +15,7 @@
             android:id="@+id/first_player_scroll"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:background="@color/firstPlayerBackground"
+            android:background="@color/secondPlayerBackground"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -162,7 +162,7 @@
         </ScrollView>
 
         <LinearLayout
-            android:id="@+id/linearLayout"
+            android:id="@+id/hexa_grid_layout"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@color/backgroundBlue"

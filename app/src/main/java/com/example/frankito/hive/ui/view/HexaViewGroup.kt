@@ -192,7 +192,7 @@ class HexaViewGroup : ViewGroup {
 
                 v.background = ColorizedDrawable.getColorizedDrawable(context, R.drawable.darkground, ContextCompat.getColor(context, R.color.mapBackground))
                 v.scaleY = 0.89F
-                v.scaleX = 0.8F
+                v.scaleX = 0.78F
 
                 //v.setOnDragListener(MyDragListener(context))
                 v.setOnTouchListener(NoTouchListener())

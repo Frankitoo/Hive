@@ -41,9 +41,9 @@
     <color name="facebookBlue">#104aa8</color>
     <color name="googleRed">#cc4343</color>
 
-    <color name="backgroundBlue">#EEEEEE</color>
+    <color name="backgroundBlue">#3E3E3E</color>
     <color name="mapBackground">#39CCCC</color>
-    <color name="secondPlayerBackground">#7FDBFF</color>
+    <color name="secondPlayerBackground">#0074D9</color>
     <color name="firstPlayerBackground">#0074D9</color>
 
 

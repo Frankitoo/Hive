@@ -20,8 +20,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
         quit_button.setOnClickListener {
-            val intent = Intent(this@MainActivity,TestActivity::class.java)
-            startActivity(intent)
+            finish()
         }
 
     }
