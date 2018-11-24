@@ -59,13 +59,19 @@ class GameActivity : AppCompatActivity() {
 
         val ant = Ant(this@GameActivity)
         ant.whichPlayer = HexaElement.WhichPlayer.PLAYERONE
+        val ant2 = Ant(this@GameActivity)
+        ant2.whichPlayer = HexaElement.WhichPlayer.PLAYERONE
         val queen = Queen(this@GameActivity)
         queen.whichPlayer = HexaElement.WhichPlayer.PLAYERTWO
 
+        ant.disableDragListener()
+
         first_player_layout_ant.addView(ant)
+        first_player_layout_ant.addView(ant2)
         first_player_layout_queen.addView(queen)
 
         playerOneViews.add(ant)
+        playerOneViews.add(ant2)
         playerTwoViews.add(queen)
 
         gameManager.playerOneViews = playerOneViews

@@ -7,10 +7,7 @@ import android.view.MotionEvent
 import android.widget.LinearLayout
 import android.widget.Toast
 import com.example.frankito.hive.R
-import com.example.frankito.hive.util.ColorizedDrawable
-import com.example.frankito.hive.util.Constants
-import com.example.frankito.hive.util.DisabledTouchListener
-import com.example.frankito.hive.util.MyTouchListener
+import com.example.frankito.hive.util.*
 import kotlinx.android.synthetic.main.view_hexa_element.view.*
 
 
@@ -41,6 +38,10 @@ abstract class HexaElement : CustomView {
 
     fun enableTouchListener() {
         setOnTouchListener(MyTouchListener())
+    }
+
+    fun disableDragListener() {
+        setOnDragListener(DisableDragListener(context))
     }
 
 }

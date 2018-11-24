@@ -24,7 +24,7 @@ class HexaViewGroup : ViewGroup {
     private val GAME_TYPE_HEX = "hex"
     private val GAME_TYPE_Y = "yType"
 
-    private var mSize = 10
+    private var mSize = 25
     private var mGameType = GAME_TYPE_HEX
 
     private var mSizeInvalidated = true
@@ -32,11 +32,11 @@ class HexaViewGroup : ViewGroup {
     private val INVALID_POINTER_ID = 1
     private var mActivePointerId = INVALID_POINTER_ID
 
-    private var mPosX: Float = 0.toFloat()
-    private var mPosY: Float = 0.toFloat()
+    private var mPosX: Float = 0F
+    private var mPosY: Float = 0F
 
-    private var mLastTouchX: Float = 0.toFloat()
-    private var mLastTouchY: Float = 0.toFloat()
+    private var mLastTouchX: Float = 0F
+    private var mLastTouchY: Float = 0F
 
     var viewArray: ArrayList<LinearLayout>
 
@@ -166,16 +166,19 @@ class HexaViewGroup : ViewGroup {
         var y_offset = Math.max(0f, (b.toFloat() - t.toFloat() - totalHeight) / 2)
 
         var cell = 0
+
         for (row in 0 until mSize) {
+
             var x_offset = x_offset_row
             val rowLength: Int
+
             //The row length depends on the board-type we want to draw.
             when (mGameType) {
                 GAME_TYPE_HEX -> rowLength = mSize
                 GAME_TYPE_Y -> rowLength = row + 1
                 else -> rowLength = row + 1
             }
-            Log.d("board", "Drawing row $row with $rowLength cells.")
+
             for (col in 0 until rowLength) {
                 val v: LinearLayout
                 if (cell < childCount) {
@@ -204,15 +207,23 @@ class HexaViewGroup : ViewGroup {
                 x_offset += effectiveWidth
                 ++cell
             }
+
             y_offset += effectiveHeight
+
             //The offset of the next row, relative to this one, again depends on the game type.
             when (mGameType) {
                 GAME_TYPE_Y -> x_offset_row -= effectiveWidth / 2
                 GAME_TYPE_HEX -> x_offset_row += effectiveWidth / 2
             }
+
         }
 
         setDragListenersForViews()
+
+        mPosX = -1500F
+        mPosY = -1000F
+
+        invalidate()
 
         //We updated all views, so it is not invalidated anymore.
         mSizeInvalidated = false
