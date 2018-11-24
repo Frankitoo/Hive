@@ -1,12 +1,17 @@
 package com.example.frankito.hive.manager
 
 import android.content.Context
+import android.support.v4.content.ContextCompat
+import com.example.frankito.hive.R
+import com.example.frankito.hive.model.HexaCell
 import com.example.frankito.hive.ui.activity.GameActivity
 import com.example.frankito.hive.ui.view.HexaElement
 import com.example.frankito.hive.ui.view.HexaViewGroup
 import com.example.frankito.hive.ui.view.Insects.*
+import com.example.frankito.hive.util.ColorizedDrawable
+import com.example.frankito.hive.util.MyDragListener
 
-class GameManager(val hexaViewGroup: HexaViewGroup, val context: Context) {
+class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
 
     companion object {
         val NUMBER_OF_ANTS = 3
@@ -15,8 +20,9 @@ class GameManager(val hexaViewGroup: HexaViewGroup, val context: Context) {
         val NUMBER_OF_STAGBEETLES = 2
         val NUMBER_OF_GRASSHOPPERS = 3
 
-        var currentPlayer : HexaElement.WhichPlayer = HexaElement.WhichPlayer.PLAYERONE
+        var currentPlayer: HexaElement.WhichPlayer = HexaElement.WhichPlayer.PLAYERONE
 
+        var firstMove = true
     }
 
     var playerOneViews: ArrayList<HexaElement>? = null
@@ -32,20 +38,20 @@ class GameManager(val hexaViewGroup: HexaViewGroup, val context: Context) {
         }
 
     fun initGame() {
-
         playerOneViews = ArrayList()
         playerTwoViews = ArrayList()
 
-        insertViewsToLayouts()
+        setPlayerOneTurn()
 
+        insertViewsToLayouts()
     }
 
-    fun setPlayerOneTurn(){
+    fun setPlayerOneTurn() {
         enablePlayerOneViews()
         disablePlayerTwoViews()
     }
 
-    fun setPlayerTwoTurn(){
+    fun setPlayerTwoTurn() {
         enablePlayerTwoViews()
         disablePlayerOneViews()
     }
@@ -121,10 +127,14 @@ class GameManager(val hexaViewGroup: HexaViewGroup, val context: Context) {
 
     }
 
-    private fun addPlayersViews(hexaElement: HexaElement){
-        when(hexaElement.whichPlayer){
-            HexaElement.WhichPlayer.PLAYERONE -> { playerOneViews?.add(hexaElement) }
-            HexaElement.WhichPlayer.PLAYERTWO -> {  playerTwoViews?.add(hexaElement) }
+    private fun addPlayersViews(hexaElement: HexaElement) {
+        when (hexaElement.whichPlayer) {
+            HexaElement.WhichPlayer.PLAYERONE -> {
+                playerOneViews?.add(hexaElement)
+            }
+            HexaElement.WhichPlayer.PLAYERTWO -> {
+                playerTwoViews?.add(hexaElement)
+            }
         }
     }
 
@@ -134,5 +144,41 @@ class GameManager(val hexaViewGroup: HexaViewGroup, val context: Context) {
         activity.insertInsectToLayout(hexaElement)
     }
 
+    fun droppedAt(row: Int, col: Int) {
+
+        if (firstMove){
+            hexaViewGroup.disableDragListenersForViews()
+            firstMove = false
+        }
+
+        val tempHexaCellOwn = getArrayElementByRowCol(row - 1, col + 1)
+
+        val tempHexaCell1 = getArrayElementByRowCol(row - 1, col + 1)
+        val tempHexaCell2 = getArrayElementByRowCol(row, col + 1)
+        val tempHexaCell3 = getArrayElementByRowCol(row + 1, col)
+        val tempHexaCell4 = getArrayElementByRowCol(row + 1, col + -1)
+        val tempHexaCell5 = getArrayElementByRowCol(row, col - 1)
+        val tempHexaCell6 = getArrayElementByRowCol(row - 1, col)
+
+        val cellsArray = ArrayList<HexaCell>()
+        cellsArray.add(tempHexaCellOwn)
+        cellsArray.add(tempHexaCell1)
+        cellsArray.add(tempHexaCell2)
+        cellsArray.add(tempHexaCell3)
+        cellsArray.add(tempHexaCell4)
+        cellsArray.add(tempHexaCell5)
+        cellsArray.add(tempHexaCell6)
+
+        for (it in cellsArray) {
+            it.layout.background = ColorizedDrawable.getColorizedDrawable(context, R.drawable.darkground, ContextCompat.getColor(context, R.color.colorPrimary))
+            it.layout.setOnDragListener(MyDragListener(context, it.row, it.col))
+        }
+
+    }
+
+    private fun getArrayElementByRowCol(row: Int, col: Int): HexaCell {
+        val index = row * HexaViewGroup.mSize + col
+        return hexaViewGroup.viewArray[index]
+    }
 
 }

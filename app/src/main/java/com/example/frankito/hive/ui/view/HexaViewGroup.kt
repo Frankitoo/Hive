@@ -12,7 +12,9 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.LinearLayout
 import com.example.frankito.hive.R
+import com.example.frankito.hive.model.HexaCell
 import com.example.frankito.hive.util.ColorizedDrawable
+import com.example.frankito.hive.util.DisableDragListener
 import com.example.frankito.hive.util.MyDragListener
 
 
@@ -21,10 +23,13 @@ class HexaViewGroup : ViewGroup {
     constructor(context: Context) : super(context)
     constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet)
 
+    companion object {
+        var mSize = 25
+    }
+
     private val GAME_TYPE_HEX = "hex"
     private val GAME_TYPE_Y = "yType"
 
-    private var mSize = 25
     private var mGameType = GAME_TYPE_HEX
 
     private var mSizeInvalidated = true
@@ -38,7 +43,7 @@ class HexaViewGroup : ViewGroup {
     private var mLastTouchX: Float = 0F
     private var mLastTouchY: Float = 0F
 
-    var viewArray: ArrayList<LinearLayout>
+    var viewArray: ArrayList<HexaCell>
 
     init {
         viewArray = ArrayList()
@@ -66,8 +71,8 @@ class HexaViewGroup : ViewGroup {
                 val x = ev.getX(pointerIndex)
                 val y = ev.getY(pointerIndex)
 
-                val dx = (x - mLastTouchX)/3
-                val dy = (y - mLastTouchY)/3
+                val dx = (x - mLastTouchX) / 3
+                val dy = (y - mLastTouchY) / 3
 
                 mPosX += dx
                 mPosY += dy
@@ -107,8 +112,8 @@ class HexaViewGroup : ViewGroup {
         canvas.save()
         //canvas.translate(mPosX, mPosY)
         for (it in viewArray) {
-            it.translationX = mPosX
-            it.translationY = mPosY
+            it.layout.translationX = mPosX
+            it.layout.translationY = mPosY
         }
 
         super.dispatchDraw(canvas)
@@ -121,7 +126,6 @@ class HexaViewGroup : ViewGroup {
     }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
-        Log.d("onBoard", "board.onlayout called with size $mSize l: $l r: $r t: $t b: $b")
 
         //If the dimensions of the board haven't changed, a redraw isn't necessary. Just update the images of the views instead by calling invalidate().
         if (!changed && !mSizeInvalidated) {
@@ -194,10 +198,9 @@ class HexaViewGroup : ViewGroup {
                 v.scaleY = 0.89F
                 v.scaleX = 0.78F
 
-                //v.setOnDragListener(MyDragListener(context))
                 v.setOnTouchListener(NoTouchListener())
 
-                viewArray.add(v)
+                viewArray.add(HexaCell(row, col, v))
 
                 v.setTag(cell)
 
@@ -243,7 +246,14 @@ class HexaViewGroup : ViewGroup {
 
     private fun setDragListenersForViews() {
         for (it in viewArray) {
-            it.setOnDragListener(MyDragListener(context))
+            it.layout.setOnDragListener(MyDragListener(context, it.row, it.col))
+            Log.d("row - col", it.row.toString() + " - " + it.col.toString())
+        }
+    }
+
+    fun disableDragListenersForViews() {
+        for (it in viewArray) {
+            it.layout.setOnDragListener(DisableDragListener(context))
         }
     }
 

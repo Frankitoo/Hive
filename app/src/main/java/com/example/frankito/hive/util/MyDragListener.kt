@@ -9,7 +9,7 @@ import com.example.frankito.hive.manager.GameManager
 import com.example.frankito.hive.ui.activity.GameActivity
 import com.example.frankito.hive.ui.view.HexaElement
 
-class MyDragListener(val context: Context) : View.OnDragListener {
+class MyDragListener(val context: Context, val row: Int, val col: Int) : View.OnDragListener {
 
     override fun onDrag(v: View, event: DragEvent): Boolean {
         when (event.action) {
@@ -32,6 +32,7 @@ class MyDragListener(val context: Context) : View.OnDragListener {
                 view.setOnTouchListener(MyTouchListener())
 
                 turnNextPlayer()
+                droppedAt(row, col)
             }
             DragEvent.ACTION_DRAG_ENDED -> {
 
@@ -43,7 +44,12 @@ class MyDragListener(val context: Context) : View.OnDragListener {
         return true
     }
 
-    private fun turnNextPlayer(){
+    private fun droppedAt(row: Int, col: Int) {
+        val parentActivity = context as GameActivity
+        parentActivity.droppedAt(row, col)
+    }
+
+    private fun turnNextPlayer() {
         val parentActivity = context as GameActivity
 
         when (GameManager.currentPlayer) {

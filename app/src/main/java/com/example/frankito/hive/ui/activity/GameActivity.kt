@@ -56,22 +56,19 @@ class GameActivity : AppCompatActivity() {
 
         initLayouts()
 
-        gameManager = GameManager(viewHolder.hexaGrid, this@GameActivity)
+        gameManager = GameManager(this@GameActivity, viewHolder.hexaGrid)
         gameManager.initGame()
 
+    }
+
+    fun droppedAt(row: Int, col: Int) {
+        gameManager.droppedAt(row, col)
     }
 
     private fun initLayouts() {
 
         playerOneLayouts = ArrayList()
         playerTwoLayouts = ArrayList()
-
-        viewHolder.firstPlayerLayoutStagbeetle.setOnClickListener {
-            setPlayerOneTurn()
-        }
-        viewHolder.secondPlayerLayoutStagbeetle.setOnClickListener {
-            setPlayerTwoTurn()
-        }
 
         viewHolder.firstPlayerSetLayout.setOnDragListener(DisableDragListener(this@GameActivity))
         viewHolder.secondPlayerSetLayout.setOnDragListener(DisableDragListener(this@GameActivity))
@@ -109,23 +106,18 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun setPlayerOneTurn() {
-
         viewHolder.firstPlayerScrollView.alpha = 1F
         viewHolder.secondPlayerScrollView.alpha = 0.5F
 
         gameManager.setPlayerOneTurn()
-
     }
 
     fun setPlayerTwoTurn() {
-
         viewHolder.firstPlayerScrollView.alpha = 0.5F
         viewHolder.secondPlayerScrollView.alpha = 1F
 
         gameManager.setPlayerTwoTurn()
-
     }
-
 
     fun insertInsectToLayout(hexaElement: HexaElement) {
         when (hexaElement) {
