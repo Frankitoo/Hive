@@ -1,10 +1,12 @@
 package com.example.frankito.hive.util
 
 import android.content.Context
+import android.util.Log
 import android.view.DragEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.Toast
 import com.example.frankito.hive.manager.GameManager
 import com.example.frankito.hive.ui.activity.GameActivity
 import com.example.frankito.hive.ui.view.HexaElement
@@ -14,7 +16,7 @@ class MyDragListener(val context: Context, val row: Int, val col: Int) : View.On
     override fun onDrag(v: View, event: DragEvent): Boolean {
         when (event.action) {
             DragEvent.ACTION_DRAG_STARTED -> {
-
+                Log.d("hahaha", "haha")
             }
             DragEvent.ACTION_DRAG_ENTERED -> {
 
@@ -23,13 +25,19 @@ class MyDragListener(val context: Context, val row: Int, val col: Int) : View.On
 
             }
             DragEvent.ACTION_DROP -> {
+
                 val view = event.localState as View
                 val owner = view.parent as ViewGroup
                 owner.removeView(view)
                 val container = v as LinearLayout
                 container.addView(view)
                 view.visibility = View.VISIBLE
-                view.setOnTouchListener(MyTouchListener())
+                view.setOnTouchListener(MyTouchListener(context))
+
+                if (view is HexaElement) {
+                    view.currentRow = row
+                    view.currentCol = col
+                }
 
                 turnNextPlayer()
                 droppedAt(row, col)

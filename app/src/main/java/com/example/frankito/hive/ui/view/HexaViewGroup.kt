@@ -246,7 +246,7 @@ class HexaViewGroup : ViewGroup {
     private fun setDragListenersForViews() {
         for (it in viewArray) {
             it.layout.setOnDragListener(MyDragListener(context, it.row, it.col))
-            Log.d("row - col", it.row.toString() + " - " + it.col.toString())
+            //Log.d("row - col", it.row.toString() + " - " + it.col.toString())
         }
     }
 

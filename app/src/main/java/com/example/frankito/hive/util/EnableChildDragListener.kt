@@ -29,7 +29,7 @@ class EnableChildDragListener(val context : Context) : View.OnDragListener {
                 val container = v.parent as LinearLayout
                 container.addView(view)
                 view.visibility = View.VISIBLE
-                view.setOnTouchListener(MyTouchListener())
+                view.setOnTouchListener(MyTouchListener(context))
 
                 turnNextPlayer()
             }

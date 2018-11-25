@@ -61,8 +61,16 @@ class GameActivity : AppCompatActivity() {
 
     }
 
+    fun restoreViews(){
+        gameManager.restoreViews()
+    }
+
     fun droppedAt(row: Int, col: Int) {
         gameManager.droppedAt(row, col)
+    }
+
+    fun dragStartedAt(row: Int,col: Int){
+        gameManager.dragStartedAt(row, col)
     }
 
     override fun onResume() {
