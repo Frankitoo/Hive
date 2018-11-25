@@ -33,6 +33,7 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
         playerTwoViews = ArrayList()
 
         setPlayerOneTurn()
+        GameManager.firstMove = true
 
         insertViewsToLayouts()
     }

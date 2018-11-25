@@ -85,7 +85,6 @@ class HexaViewGroup : ViewGroup {
 
             MotionEvent.ACTION_UP -> {
                 mActivePointerId = INVALID_POINTER_ID
-                setDragListenersForViews()
             }
 
             MotionEvent.ACTION_CANCEL -> {
