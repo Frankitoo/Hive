@@ -9,6 +9,7 @@ import com.example.frankito.hive.ui.view.HexaElement
 import com.example.frankito.hive.ui.view.HexaViewGroup
 import com.example.frankito.hive.ui.view.Insects.*
 import com.example.frankito.hive.util.ColorizedDrawable
+import com.example.frankito.hive.util.DisableDragListener
 import com.example.frankito.hive.util.MyDragListener
 
 class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
@@ -28,9 +29,13 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
     var playerOneViews: ArrayList<HexaElement>? = null
     var playerTwoViews: ArrayList<HexaElement>? = null
 
+    var activeCells: ArrayList<HexaCell>? = null
+
     fun initGame() {
         playerOneViews = ArrayList()
         playerTwoViews = ArrayList()
+
+        activeCells = ArrayList()
 
         setPlayerOneTurn()
         GameManager.firstMove = true
@@ -55,29 +60,64 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
             firstMove = false
         }
 
-        val tempHexaCellOwn = getArrayElementByRowCol(row - 1, col + 1)
+        getArrayElementByRowCol(row, col).layout.setOnDragListener(DisableDragListener(context))
 
-        val tempHexaCell1 = getArrayElementByRowCol(row - 1, col + 1)
-        val tempHexaCell2 = getArrayElementByRowCol(row, col + 1)
-        val tempHexaCell3 = getArrayElementByRowCol(row + 1, col)
-        val tempHexaCell4 = getArrayElementByRowCol(row + 1, col + -1)
-        val tempHexaCell5 = getArrayElementByRowCol(row, col - 1)
-        val tempHexaCell6 = getArrayElementByRowCol(row - 1, col)
-
-        val cellsArray = ArrayList<HexaCell>()
-        cellsArray.add(tempHexaCellOwn)
-        cellsArray.add(tempHexaCell1)
-        cellsArray.add(tempHexaCell2)
-        cellsArray.add(tempHexaCell3)
-        cellsArray.add(tempHexaCell4)
-        cellsArray.add(tempHexaCell5)
-        cellsArray.add(tempHexaCell6)
+        //Neighbour cells
+        val cellsArray = getNeighBours(row, col)
+        //Owner cell
+        cellsArray.add(getArrayElementByRowCol(row, col))
 
         for (it in cellsArray) {
             it.layout.background = ColorizedDrawable.getColorizedDrawable(context, R.drawable.darkground, ContextCompat.getColor(context, R.color.colorPrimary))
             it.layout.setOnDragListener(MyDragListener(context, it.row, it.col))
+
+            activeCells?.add(it)
         }
 
+        checkAllActiveCells()
+
+    }
+
+    private fun checkAllActiveCells() {
+        activeCells?.let {
+            for (iter in it) {
+                if (!checkIfHasNeighbour(iter)) {
+                    iter.layout.background = ColorizedDrawable.getColorizedDrawable(context, R.drawable.darkground, ContextCompat.getColor(context, R.color.mapBackground))
+                    iter.layout.setOnDragListener(DisableDragListener(context))
+                }
+            }
+        }
+    }
+
+    private fun getNeighBours(row: Int, col: Int): ArrayList<HexaCell> {
+
+        val cellsArray = ArrayList<HexaCell>()
+
+        //This is the owner cell
+        //cellsArray.add(getArrayElementByRowCol(row, col))
+
+        cellsArray.add(getArrayElementByRowCol(row - 1, col + 1))
+        cellsArray.add(getArrayElementByRowCol(row, col + 1))
+        cellsArray.add(getArrayElementByRowCol(row + 1, col))
+        cellsArray.add(getArrayElementByRowCol(row + 1, col + -1))
+        cellsArray.add(getArrayElementByRowCol(row, col - 1))
+        cellsArray.add(getArrayElementByRowCol(row - 1, col))
+
+        return cellsArray
+    }
+
+    private fun checkIfHasNeighbour(hexaCell: HexaCell): Boolean {
+        val neighbours = getNeighBours(hexaCell.row, hexaCell.col)
+        for (it in neighbours) {
+            if (checkCellContainsElement(it)) {
+                return true
+            }
+        }
+        return false
+    }
+
+    private fun checkCellContainsElement(hexaCell: HexaCell): Boolean {
+        return hexaCell.layout.childCount > 0
     }
 
     private fun disablePlayerOneViews() {
