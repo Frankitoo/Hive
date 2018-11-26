@@ -10,6 +10,7 @@ import com.example.frankito.hive.ui.view.HexaViewGroup
 import com.example.frankito.hive.ui.view.Insects.*
 import com.example.frankito.hive.util.ColorizedDrawable
 import com.example.frankito.hive.util.DisableDragListener
+import com.example.frankito.hive.util.HexaHelper
 import com.example.frankito.hive.util.MyDragListener
 
 class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
@@ -33,16 +34,99 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
 
     private var disabledCellsAtStartDrag: ArrayList<HexaCell>? = null
 
+    private var elements: ArrayList<HexaElement>? = null
+
+    private var markedElements: ArrayList<HexaElement>? = null
+    private var usedElements: ArrayList<HexaElement>? = null
+
     fun initGame() {
         playerOneViews = ArrayList()
         playerTwoViews = ArrayList()
         disabledCellsAtStartDrag = ArrayList()
         activeCells = ArrayList()
+        elements = ArrayList()
 
         setPlayerOneTurn()
         GameManager.firstMove = true
 
         insertViewsToLayouts()
+    }
+
+    fun checkAllElementIfEssential() {
+        elements?.let {
+            val currentElements = it.clone() as ArrayList<HexaElement>
+            for (iter in it) {
+                if (!checkIfEssentialPoint(iter, currentElements)) {
+                    iter.enableTouchListener()
+                } else {
+                    iter.disableTouchListener()
+                }
+            }
+        }
+    }
+
+    fun checkIfEssentialPoint(element: HexaElement, elements: ArrayList<HexaElement>): Boolean {
+
+        val elementsCount = elements.size
+
+        if (elementsCount > 2) {
+
+            val otherElements = elements.clone() as ArrayList<HexaElement>
+            otherElements.remove(element)
+
+            val otherElementsCount = elementsCount - 1
+
+            val countBFS = countBFSSearch(otherElements)
+
+            return (countBFS != otherElementsCount)
+
+        } else {
+            return false
+        }
+    }
+
+    fun countBFSSearch(otherElements: ArrayList<HexaElement>): Int? {
+
+        //INIT BFS Search
+
+        markedElements = ArrayList()
+        usedElements = ArrayList()
+
+        val startElement = otherElements[0]
+
+        markedElements?.add(startElement)
+
+        //ITERATION LOOP
+
+        BFSIteration(startElement, otherElements)
+
+        val count = markedElements?.size
+
+        return count
+    }
+
+    fun BFSIteration(element: HexaElement, otherElements: ArrayList<HexaElement>) {
+        val neighbourElements = getNeighBourElements(element, otherElements)
+        for (neighbour in neighbourElements) {
+            if (!markedElements!!.contains(neighbour)) {
+                markedElements?.add(neighbour)
+                BFSIteration(neighbour, otherElements)
+            }
+        }
+    }
+
+    fun getAllPlayerElement() {
+        elements = ArrayList()
+        for (it in playerOneViews!!) {
+            if (it.currentCol != null && it.currentRow != null) {
+                elements!!.add(it)
+            }
+        }
+        for (it in playerTwoViews!!) {
+            if (it.currentCol != null && it.currentRow != null) {
+                elements!!.add(it)
+            }
+        }
     }
 
     fun setPlayerOneTurn() {
@@ -94,7 +178,9 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
 
         getArrayElementByRowCol(row, col).layout.setOnDragListener(DisableDragListener(context))
 
+        getAllPlayerElement()
         checkAllActiveCells()
+        checkAllElementIfEssential()
 
     }
 
@@ -123,6 +209,18 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
         }
     }
 
+    private fun getNeighBourElements(hexaElement: HexaElement, elements: ArrayList<HexaElement>): ArrayList<HexaElement> {
+
+        val neighbourElements = ArrayList<HexaElement>()
+
+        for (it in elements) {
+            if (HexaHelper.checkIfTwoElementsAreNeighbour(hexaElement, it)) {
+                neighbourElements.add(it)
+            }
+        }
+        return neighbourElements
+    }
+
     private fun getNeighBours(row: Int, col: Int): ArrayList<HexaCell> {
 
         val cellsArray = ArrayList<HexaCell>()
@@ -133,7 +231,7 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
         cellsArray.add(getArrayElementByRowCol(row - 1, col + 1))
         cellsArray.add(getArrayElementByRowCol(row, col + 1))
         cellsArray.add(getArrayElementByRowCol(row + 1, col))
-        cellsArray.add(getArrayElementByRowCol(row + 1, col + -1))
+        cellsArray.add(getArrayElementByRowCol(row + 1, col - 1))
         cellsArray.add(getArrayElementByRowCol(row, col - 1))
         cellsArray.add(getArrayElementByRowCol(row - 1, col))
 
