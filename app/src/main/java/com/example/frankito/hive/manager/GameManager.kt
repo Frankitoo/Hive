@@ -39,12 +39,15 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
     private var markedElements: ArrayList<HexaElement>? = null
     private var usedElements: ArrayList<HexaElement>? = null
 
+    private var essentialPoints : ArrayList<HexaElement>? = null
+
     fun initGame() {
         playerOneViews = ArrayList()
         playerTwoViews = ArrayList()
         disabledCellsAtStartDrag = ArrayList()
         activeCells = ArrayList()
         elements = ArrayList()
+        essentialPoints = ArrayList()
 
         setPlayerOneTurn()
         GameManager.firstMove = true
@@ -53,12 +56,14 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
     }
 
     fun checkAllElementIfEssential() {
+        essentialPoints = ArrayList()
         elements?.let {
             val currentElements = it.clone() as ArrayList<HexaElement>
             for (iter in it) {
                 if (!checkIfEssentialPoint(iter, currentElements)) {
                     iter.enableTouchListener()
                 } else {
+                    essentialPoints!!.add(iter)
                     iter.disableTouchListener()
                 }
             }
@@ -282,7 +287,9 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
     private fun enablePlayerOneViews() {
         playerOneViews?.let {
             for (iteration in it) {
-                iteration.enableTouchListener()
+                if(!essentialPoints!!.contains(iteration)) {
+                    iteration.enableTouchListener()
+                }
             }
         }
     }
@@ -290,7 +297,9 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
     private fun enablePlayerTwoViews() {
         playerTwoViews?.let {
             for (iteration in it) {
-                iteration.enableTouchListener()
+                if(!essentialPoints!!.contains(iteration)) {
+                    iteration.enableTouchListener()
+                }
             }
         }
     }

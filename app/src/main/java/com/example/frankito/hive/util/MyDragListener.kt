@@ -6,7 +6,6 @@ import android.view.DragEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import android.widget.Toast
 import com.example.frankito.hive.manager.GameManager
 import com.example.frankito.hive.ui.activity.GameActivity
 import com.example.frankito.hive.ui.view.HexaElement
@@ -38,9 +37,9 @@ class MyDragListener(val context: Context, val row: Int, val col: Int) : View.On
                     view.currentRow = row
                     view.currentCol = col
                 }
-
-                turnNextPlayer()
+                //TODO
                 droppedAt(row, col)
+                turnNextPlayer()
             }
             DragEvent.ACTION_DRAG_ENDED -> {
 
