@@ -33,6 +33,7 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
     var activeCells: ArrayList<HexaCell>? = null
 
     private var disabledCellsAtStartDrag: ArrayList<HexaCell>? = null
+    private var disabledCellsAtLogicDrag: ArrayList<HexaCell>? = null
 
     private var elements: ArrayList<HexaElement>? = null
 
@@ -45,6 +46,7 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
         playerOneViews = ArrayList()
         playerTwoViews = ArrayList()
         disabledCellsAtStartDrag = ArrayList()
+        disabledCellsAtLogicDrag = ArrayList()
         activeCells = ArrayList()
         elements = ArrayList()
         essentialPoints = ArrayList()
@@ -144,7 +146,7 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
         disablePlayerOneViews()
     }
 
-    fun restoreViews() {
+    fun restoreStartDragViews() {
         disabledCellsAtStartDrag?.let {
             for (iter in it) {
                 iter.layout.background = ColorizedDrawable.getColorizedDrawable(context, R.drawable.darkground, ContextCompat.getColor(context, R.color.colorPrimary))
@@ -157,6 +159,19 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
         disabledCellsAtStartDrag = ArrayList()
     }
 
+    fun restoreLogicDisabledViews() {
+        disabledCellsAtLogicDrag?.let {
+            for (iter in it) {
+                iter.layout.background = ColorizedDrawable.getColorizedDrawable(context, R.drawable.darkground, ContextCompat.getColor(context, R.color.colorPrimary))
+
+                if (!checkCellContainsElement(iter)) {
+                    iter.layout.setOnDragListener(MyDragListener(context, iter.row, iter.col))
+                }
+            }
+        }
+        disabledCellsAtLogicDrag = ArrayList()
+    }
+
     fun droppedAt(row: Int, col: Int) {
 
         if (firstMove) {
@@ -164,7 +179,8 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
             firstMove = false
         }
 
-        restoreViews()
+        disabledCellsAtStartDrag = ArrayList()
+        restoreLogicDisabledViews()
 
         //Neighbour cells
         val cellsArray = getNeighBours(row, col)
@@ -178,7 +194,7 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
                 it.layout.setOnDragListener(MyDragListener(context, it.row, it.col))
             }
 
-            if(!activeCells!!.contains(it)) {
+            if (!activeCells!!.contains(it)) {
                 activeCells?.add(it)
             }
         }
@@ -204,12 +220,12 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
         }
 
         val availableCells = getAvailableCells()
-        val disabledCells = element.getDisableCellsByMoveLogic(availableCells)
+        val disabledCells = element.getDisableCellsByMoveLogic(availableCells, elements!!)
 
         for (it in disabledCells) {
             it.layout.background = ColorizedDrawable.getColorizedDrawable(context, R.drawable.darkground, ContextCompat.getColor(context, R.color.mapBackground))
             it.layout.setOnDragListener(DisableDragListener(context))
-            disabledCellsAtStartDrag?.add(it)
+            disabledCellsAtLogicDrag?.add(it)
         }
 
     }
@@ -227,14 +243,17 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
     }
 
     private fun checkAllActiveCells() {
+        val removeCells = ArrayList<HexaCell>()
         activeCells?.let {
             for (iter in it) {
                 if (!checkIfHasNeighbour(iter)) {
                     iter.layout.background = ColorizedDrawable.getColorizedDrawable(context, R.drawable.darkground, ContextCompat.getColor(context, R.color.mapBackground))
                     iter.layout.setOnDragListener(DisableDragListener(context))
+                    removeCells.add(iter)
                 }
             }
         }
+        activeCells?.removeAll(removeCells)
     }
 
     private fun getNeighBourElements(hexaElement: HexaElement, elements: ArrayList<HexaElement>): ArrayList<HexaElement> {

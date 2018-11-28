@@ -30,6 +30,6 @@ class Ant : HexaElement {
         }
     }
 
-    override fun getDisableCellsByMoveLogic(availableCells: ArrayList<HexaCell>) = ArrayList<HexaCell>()
+    override fun getDisableCellsByMoveLogic(availableCells: ArrayList<HexaCell>, elements: ArrayList<HexaElement>) = ArrayList<HexaCell>()
 
 }

@@ -46,4 +46,8 @@ object HexaHelper {
         }
         return false
     }
+
+    fun checkCellContainsElement(hexaCell: HexaCell): Boolean {
+        return hexaCell.layout.childCount > 0
+    }
 }

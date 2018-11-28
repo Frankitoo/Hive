@@ -34,7 +34,7 @@ abstract class HexaElement : CustomView {
 
     abstract fun setElementPlayerType(whichPlayer: WhichPlayer)
 
-    abstract fun getDisableCellsByMoveLogic(availableCells: ArrayList<HexaCell>) : ArrayList<HexaCell>
+    abstract fun getDisableCellsByMoveLogic(availableCells: ArrayList<HexaCell>, elements: ArrayList<HexaElement>) : ArrayList<HexaCell>
 
     fun disableTouchListener() {
         setOnTouchListener(DisabledTouchListener())

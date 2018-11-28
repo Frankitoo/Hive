@@ -27,7 +27,7 @@ class DisableDragListener(val context : Context) : View.OnDragListener {
                 if(view is HexaElement){
                     if(view.currentRow != null && view.currentCol != null){
                         val parent = context as GameActivity
-                        parent.restoreViews()
+                        parent.restoreStartDragViews()
                     }
                 }
             }
