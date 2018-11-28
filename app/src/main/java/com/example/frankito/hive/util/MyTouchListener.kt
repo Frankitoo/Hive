@@ -15,14 +15,14 @@ class MyTouchListener(val context: Context) : View.OnTouchListener {
             if (view is HexaElement) {
                 val parent = context as GameActivity
                 if (view.currentCol != null && view.currentRow != null) {
-                    parent.dragStartedAt(view.currentRow!!, view.currentCol!!)
+                    parent.dragStartedAt(view)
                 }
             }
 
             val data = ClipData.newPlainText("", "")
             val shadowBuilder = View.DragShadowBuilder(view)
             view.startDrag(data, shadowBuilder, view, 0)
-            view.setVisibility(View.INVISIBLE)
+            view.visibility = View.VISIBLE
 
             return true
 

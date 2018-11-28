@@ -69,8 +69,8 @@ class GameActivity : AppCompatActivity() {
         gameManager.droppedAt(row, col)
     }
 
-    fun dragStartedAt(row: Int,col: Int){
-        gameManager.dragStartedAt(row, col)
+    fun dragStartedAt(element: HexaElement){
+        gameManager.dragStartedAt(element)
     }
 
     override fun onResume() {

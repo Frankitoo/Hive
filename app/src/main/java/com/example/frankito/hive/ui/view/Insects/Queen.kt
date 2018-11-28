@@ -4,6 +4,7 @@ import android.content.Context
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import com.example.frankito.hive.R
+import com.example.frankito.hive.model.HexaCell
 import com.example.frankito.hive.ui.view.HexaElement
 import com.example.frankito.hive.util.ColorizedDrawable
 import kotlinx.android.synthetic.main.view_hexa_element.view.*
@@ -24,6 +25,10 @@ class Queen : HexaElement {
                 view_hexa_element_layout.background = ContextCompat.getDrawable(context, R.drawable.darkground)
             }
         }
+    }
+
+    override fun getDisableCellsByMoveLogic(availableCells: ArrayList<HexaCell>): ArrayList<HexaCell> {
+        return ArrayList()
     }
 
 }

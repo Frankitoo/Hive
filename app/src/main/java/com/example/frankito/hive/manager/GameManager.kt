@@ -39,7 +39,7 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
     private var markedElements: ArrayList<HexaElement>? = null
     private var usedElements: ArrayList<HexaElement>? = null
 
-    private var essentialPoints : ArrayList<HexaElement>? = null
+    private var essentialPoints: ArrayList<HexaElement>? = null
 
     fun initGame() {
         playerOneViews = ArrayList()
@@ -178,7 +178,9 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
                 it.layout.setOnDragListener(MyDragListener(context, it.row, it.col))
             }
 
-            activeCells?.add(it)
+            if(!activeCells!!.contains(it)) {
+                activeCells?.add(it)
+            }
         }
 
         getArrayElementByRowCol(row, col).layout.setOnDragListener(DisableDragListener(context))
@@ -189,18 +191,39 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
 
     }
 
-    fun dragStartedAt(row: Int, col: Int) {
+    fun dragStartedAt(element: HexaElement) {
 
-        val neighbours = getNeighBours(row, col)
+        val neighbours = getNeighBours(element.currentRow!!, element.currentCol!!)
 
         for (it in neighbours) {
             if (countNeighbours(it) < 2) {
                 it.layout.background = ColorizedDrawable.getColorizedDrawable(context, R.drawable.darkground, ContextCompat.getColor(context, R.color.mapBackground))
                 it.layout.setOnDragListener(DisableDragListener(context))
-
                 disabledCellsAtStartDrag?.add(it)
             }
         }
+
+        val availableCells = getAvailableCells()
+        val disabledCells = element.getDisableCellsByMoveLogic(availableCells)
+
+        for (it in disabledCells) {
+            it.layout.background = ColorizedDrawable.getColorizedDrawable(context, R.drawable.darkground, ContextCompat.getColor(context, R.color.mapBackground))
+            it.layout.setOnDragListener(DisableDragListener(context))
+            disabledCellsAtStartDrag?.add(it)
+        }
+
+    }
+
+    private fun getAvailableCells(): ArrayList<HexaCell> {
+        val availableCells = ArrayList<HexaCell>()
+        for (it in activeCells!!) {
+            if (!checkCellContainsElement(it)) {
+                if (!disabledCellsAtStartDrag!!.contains(it)) {
+                    availableCells.add(it)
+                }
+            }
+        }
+        return availableCells
     }
 
     private fun checkAllActiveCells() {
@@ -287,7 +310,7 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
     private fun enablePlayerOneViews() {
         playerOneViews?.let {
             for (iteration in it) {
-                if(!essentialPoints!!.contains(iteration)) {
+                if (!essentialPoints!!.contains(iteration)) {
                     iteration.enableTouchListener()
                 }
             }
@@ -297,7 +320,7 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
     private fun enablePlayerTwoViews() {
         playerTwoViews?.let {
             for (iteration in it) {
-                if(!essentialPoints!!.contains(iteration)) {
+                if (!essentialPoints!!.contains(iteration)) {
                     iteration.enableTouchListener()
                 }
             }
