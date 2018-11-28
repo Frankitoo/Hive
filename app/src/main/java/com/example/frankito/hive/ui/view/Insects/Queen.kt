@@ -7,6 +7,7 @@ import com.example.frankito.hive.R
 import com.example.frankito.hive.model.HexaCell
 import com.example.frankito.hive.ui.view.HexaElement
 import com.example.frankito.hive.util.ColorizedDrawable
+import com.example.frankito.hive.util.HexaHelper
 import kotlinx.android.synthetic.main.view_hexa_element.view.*
 
 class Queen : HexaElement {
@@ -15,7 +16,7 @@ class Queen : HexaElement {
     constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet)
 
     override fun setElementPlayerType(whichPlayer: WhichPlayer) {
-        when(whichPlayer) {
+        when (whichPlayer) {
             WhichPlayer.PLAYERONE -> {
                 view_hexa_element_image.setImageDrawable(ColorizedDrawable.getColorizedDrawable(context, R.drawable.queen, ContextCompat.getColor(context, R.color.black)))
                 view_hexa_element_layout.background = ContextCompat.getDrawable(context, R.drawable.lightground)
@@ -28,6 +29,17 @@ class Queen : HexaElement {
     }
 
     override fun getDisableCellsByMoveLogic(availableCells: ArrayList<HexaCell>): ArrayList<HexaCell> {
+        /*
+        val cellsToDisable = ArrayList<HexaCell>()
+
+        for (it in availableCells) {
+            if (this.currentRow != null && this.currentCol != null) {
+                if (!HexaHelper.checkIfCoordinatesAreNeightbour(it.row, it.col, this.currentRow!!, this.currentCol!!)) {
+                    cellsToDisable.add(it)
+                }
+            }
+        }
+*/
         return ArrayList()
     }
 

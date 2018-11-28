@@ -22,7 +22,7 @@ class MyTouchListener(val context: Context) : View.OnTouchListener {
             val data = ClipData.newPlainText("", "")
             val shadowBuilder = View.DragShadowBuilder(view)
             view.startDrag(data, shadowBuilder, view, 0)
-            view.visibility = View.VISIBLE
+            view.visibility = View.INVISIBLE
 
             return true
 
