@@ -29,7 +29,7 @@ class Queen : HexaElement {
     }
 
     override fun getDisableCellsByMoveLogic(availableCells: ArrayList<HexaCell>): ArrayList<HexaCell> {
-        /*
+
         val cellsToDisable = ArrayList<HexaCell>()
 
         for (it in availableCells) {
@@ -39,8 +39,8 @@ class Queen : HexaElement {
                 }
             }
         }
-*/
-        return ArrayList()
+
+        return cellsToDisable
     }
 
 }

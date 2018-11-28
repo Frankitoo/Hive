@@ -164,7 +164,7 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
             firstMove = false
         }
 
-        disabledCellsAtStartDrag = ArrayList()
+        restoreViews()
 
         //Neighbour cells
         val cellsArray = getNeighBours(row, col)
