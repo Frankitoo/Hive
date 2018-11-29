@@ -1,9 +1,11 @@
 package com.example.frankito.hive.util
 
+import com.example.frankito.hive.model.Direction
 import com.example.frankito.hive.model.HexaCell
 import com.example.frankito.hive.ui.view.HexaElement
 
 object HexaHelper {
+
     fun checkIfTwoElementsAreNeighbour(element1: HexaElement, element2: HexaElement): Boolean {
 
         val row1 = element1.currentRow!!
@@ -50,4 +52,28 @@ object HexaHelper {
     fun checkCellContainsElement(hexaCell: HexaCell): Boolean {
         return hexaCell.layout.childCount > 0
     }
+
+    fun getDirectionOfNeighbourElement(row1: Int, col1: Int, row2: Int, col2: Int): com.example.frankito.hive.model.Direction? {
+        var direction: Direction? = null
+        if ((row1 - 1 == row2) && (col1 + 1 == col2)) {
+            direction = Direction(-1, +1)
+        }
+        if ((row1 == row2) && (col1 + 1 == col2)) {
+            direction = Direction(0, +1)
+        }
+        if ((row1 + 1 == row2) && (col1 == col2)) {
+            direction = Direction(+1, 0)
+        }
+        if ((row1 + 1 == row2) && (col1 - 1 == col2)) {
+            direction = Direction(+1, -1)
+        }
+        if ((row1 == row2) && (col1 - 1 == col2)) {
+            direction = Direction(0, -1)
+        }
+        if ((row1 - 1 == row2) && (col1 == col2)) {
+            direction = Direction(-1, 0)
+        }
+        return direction
+    }
+
 }
