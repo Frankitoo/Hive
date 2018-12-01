@@ -2,6 +2,7 @@ package com.example.frankito.hive.manager
 
 import android.content.Context
 import android.support.v4.content.ContextCompat
+import android.widget.Toast
 import com.example.frankito.hive.R
 import com.example.frankito.hive.model.HexaCell
 import com.example.frankito.hive.ui.activity.GameActivity
@@ -215,7 +216,6 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
             }
         }
 
-        //TODO TEST THIS !!!
         if (dragStartedAtRow != null && dragStartedAtCol != null) {
             getArrayElementByRowCol(dragStartedAtRow!!, dragStartedAtCol!!).layout.setOnDragListener(MyDragListener(context, dragStartedAtRow!!, dragStartedAtCol!!))
         }
@@ -225,6 +225,8 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
         getAllPlayerElement()
         checkAllActiveCells()
         checkAllElementIfEssential()
+
+        checkIfWinMove()
 
     }
 
@@ -446,6 +448,35 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
     private fun getArrayElementByRowCol(row: Int, col: Int): HexaCell {
         val index = row * HexaViewGroup.mSize + col
         return hexaViewGroup.viewArray[index]
+    }
+
+    private fun checkIfWinMove() {
+
+        if (playerTwoViews != null) {
+            for (it in playerTwoViews!!) {
+                if (it is Queen) {
+                    if (it.currentCol != null && it.currentRow != null) {
+                        if (countNeighbours(getArrayElementByRowCol(it.currentRow!!, it.currentCol!!)) == 6) {
+                            Toast.makeText(context, "Player 1 has Won the game!", Toast.LENGTH_SHORT).show()
+                            //Dialog fragment
+                        }
+                    }
+                }
+            }
+        }
+
+        if (playerOneViews != null) {
+            for (it in playerOneViews!!) {
+                if (it is Queen) {
+                    if (it.currentCol != null && it.currentRow != null) {
+                        if (countNeighbours(getArrayElementByRowCol(it.currentRow!!, it.currentCol!!)) == 6) {
+                            Toast.makeText(context, "Player 2 has Won the game!", Toast.LENGTH_SHORT).show()
+                            //Dialog fragment
+                        }
+                    }
+                }
+            }
+        }
     }
 
 }
