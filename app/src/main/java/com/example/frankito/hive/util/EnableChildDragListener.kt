@@ -9,7 +9,7 @@ import com.example.frankito.hive.manager.GameManager
 import com.example.frankito.hive.ui.activity.GameActivity
 import com.example.frankito.hive.ui.view.HexaElement
 
-class EnableChildDragListener(val context : Context) : View.OnDragListener {
+class EnableChildDragListener(val context: Context, val row: Int? = null, val col: Int? = null) : View.OnDragListener {
 
     override fun onDrag(v: View, event: DragEvent): Boolean {
         when (event.action) {
@@ -26,11 +26,18 @@ class EnableChildDragListener(val context : Context) : View.OnDragListener {
                 val view = event.localState as View
                 val owner = view.parent as ViewGroup
                 owner.removeView(view)
+                //IMPORTANT THAT THE DIFFERENCE IS v.parent here
                 val container = v.parent as LinearLayout
                 container.addView(view)
                 view.visibility = View.VISIBLE
                 view.setOnTouchListener(MyTouchListener(context))
 
+                if (view is HexaElement) {
+                    view.currentRow = row
+                    view.currentCol = col
+                }
+
+                droppedAt(row!!, col!!)
                 turnNextPlayer()
             }
             DragEvent.ACTION_DRAG_ENDED -> {
@@ -43,15 +50,22 @@ class EnableChildDragListener(val context : Context) : View.OnDragListener {
         return true
     }
 
-    private fun turnNextPlayer(){
+    private fun droppedAt(row: Int, col: Int) {
+        val parentActivity = context as GameActivity
+        parentActivity.droppedAt(row, col)
+    }
+
+    private fun turnNextPlayer() {
         val parentActivity = context as GameActivity
 
         when (GameManager.currentPlayer) {
             HexaElement.WhichPlayer.PLAYERONE -> {
                 parentActivity.setPlayerTwoTurn()
+                GameManager.currentPlayer = HexaElement.WhichPlayer.PLAYERTWO
             }
             HexaElement.WhichPlayer.PLAYERTWO -> {
                 parentActivity.setPlayerOneTurn()
+                GameManager.currentPlayer = HexaElement.WhichPlayer.PLAYERONE
             }
         }
     }

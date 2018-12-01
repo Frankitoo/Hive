@@ -53,6 +53,10 @@ object HexaHelper {
         return hexaCell.layout.childCount > 0
     }
 
+    fun checkCellContainsMulitpleElements(hexaCell: HexaCell): Boolean {
+        return hexaCell.layout.childCount > 1
+    }
+
     fun getDirectionOfNeighbourElement(row1: Int, col1: Int, row2: Int, col2: Int): com.example.frankito.hive.model.Direction? {
         var direction: Direction? = null
         if ((row1 - 1 == row2) && (col1 + 1 == col2)) {

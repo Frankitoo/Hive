@@ -19,7 +19,6 @@
         <activity
             android:name=".ui.activity.GameActivity"
             android:screenOrientation="landscape"></activity>
-        <activity android:name=".ui.activity.TestActivity"></activity>
     </application>
 
 </manifest>

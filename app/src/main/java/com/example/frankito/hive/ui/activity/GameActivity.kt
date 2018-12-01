@@ -64,6 +64,7 @@ class GameActivity : AppCompatActivity() {
     fun restoreStartDragViews(){
         gameManager.restoreStartDragViews()
         gameManager.restoreLogicDisabledViews()
+        gameManager.restoreEnabledViews()
     }
 
     fun droppedAt(row: Int, col: Int) {

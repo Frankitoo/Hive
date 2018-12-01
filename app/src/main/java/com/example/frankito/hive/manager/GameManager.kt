@@ -35,7 +35,12 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
     private var disabledCellsAtStartDrag: ArrayList<HexaCell>? = null
     private var disabledCellsAtLogicDrag: ArrayList<HexaCell>? = null
 
+    private var enabledElements: ArrayList<HexaElement>? = null
+
     private var elements: ArrayList<HexaElement>? = null
+
+    private var dragStartedAtRow: Int? = null
+    private var dragStartedAtCol: Int? = null
 
     private var markedElements: ArrayList<HexaElement>? = null
     private var usedElements: ArrayList<HexaElement>? = null
@@ -47,6 +52,7 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
         playerTwoViews = ArrayList()
         disabledCellsAtStartDrag = ArrayList()
         disabledCellsAtLogicDrag = ArrayList()
+        enabledElements = ArrayList()
         activeCells = ArrayList()
         elements = ArrayList()
         essentialPoints = ArrayList()
@@ -159,6 +165,15 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
         disabledCellsAtStartDrag = ArrayList()
     }
 
+    fun restoreEnabledViews() {
+        enabledElements?.let {
+            for (iter in it) {
+                iter.disableDragListener()
+            }
+        }
+        enabledElements = ArrayList()
+    }
+
     fun restoreLogicDisabledViews() {
         disabledCellsAtLogicDrag?.let {
             for (iter in it) {
@@ -181,6 +196,7 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
 
         disabledCellsAtStartDrag = ArrayList()
         restoreLogicDisabledViews()
+        restoreEnabledViews()
 
         //Neighbour cells
         val cellsArray = getNeighBours(row, col)
@@ -199,6 +215,11 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
             }
         }
 
+        //TODO TEST THIS !!!
+        if (dragStartedAtRow != null && dragStartedAtCol != null) {
+            getArrayElementByRowCol(dragStartedAtRow!!, dragStartedAtCol!!).layout.setOnDragListener(MyDragListener(context, dragStartedAtRow!!, dragStartedAtCol!!))
+        }
+
         getArrayElementByRowCol(row, col).layout.setOnDragListener(DisableDragListener(context))
 
         getAllPlayerElement()
@@ -209,16 +230,35 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
 
     fun dragStartedAt(element: HexaElement) {
 
-        val neighbours = getNeighBours(element.currentRow!!, element.currentCol!!)
+        dragStartedAtRow = element.currentRow
+        dragStartedAtCol = element.currentCol
 
-        for (it in neighbours) {
-            if (countNeighbours(it) < 2) {
-                it.layout.background = ColorizedDrawable.getColorizedDrawable(context, R.drawable.darkground, ContextCompat.getColor(context, R.color.mapBackground))
-                it.layout.setOnDragListener(DisableDragListener(context))
-                disabledCellsAtStartDrag?.add(it)
+        //ENABLE ALL THE ELEMENTS THAT IS NEAR A STAGBEETLE WHEN IT MOVES
+        val enabledElementsStagbeetle = element.getCellsToEnable(elements!!)
+
+        for (it in enabledElementsStagbeetle) {
+            it.enableDragListener()
+            enabledElements?.add(it)
+        }
+
+        //DISABLE NEAR CELLS ONLY IF NOT MOVING FROM AN OTHER ELEMENT
+        val currentCell = getArrayElementByRowCol(element.currentRow!!, element.currentCol!!)
+        if (!HexaHelper.checkCellContainsMulitpleElements(currentCell)) {
+
+            val neighbours = getNeighBours(element.currentRow!!, element.currentCol!!)
+
+            //DISABLE ALL CELLS THAT TIER THE COMPONENT APART MULTIPLE PIECES
+            for (it in neighbours) {
+                if (countNeighbours(it) < 2) {
+                    it.layout.background = ColorizedDrawable.getColorizedDrawable(context, R.drawable.darkground, ContextCompat.getColor(context, R.color.mapBackground))
+                    it.layout.setOnDragListener(DisableDragListener(context))
+                    disabledCellsAtStartDrag?.add(it)
+                }
             }
         }
 
+
+        //DISABLE ALL CELLS THAT INSECT CANNOT STEP ON
         val availableCells = getAvailableCells()
         val disabledCells = element.getDisableCellsByMoveLogic(availableCells, elements!!)
 

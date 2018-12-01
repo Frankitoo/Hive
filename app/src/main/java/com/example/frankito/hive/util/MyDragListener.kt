@@ -37,7 +37,7 @@ class MyDragListener(val context: Context, val row: Int, val col: Int) : View.On
                     view.currentRow = row
                     view.currentCol = col
                 }
-                //TODO
+
                 droppedAt(row, col)
                 turnNextPlayer()
             }
