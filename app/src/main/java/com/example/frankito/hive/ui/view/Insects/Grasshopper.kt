@@ -89,7 +89,7 @@ class Grasshopper : HexaElement {
         return iterateDirectionCheck(availableCells, directionPlus, neigbourElement)
     }
 
-    override fun getCellsToEnable(elements: ArrayList<HexaElement>): ArrayList<HexaCell> {
+    override fun getCellsToEnable(elements: ArrayList<HexaElement>): ArrayList<HexaElement> {
         return ArrayList()
     }
 

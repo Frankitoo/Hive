@@ -16,7 +16,7 @@ class Stagbeetle : HexaElement {
     constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet)
 
     override fun setElementPlayerType(whichPlayer: WhichPlayer) {
-        when(whichPlayer){
+        when (whichPlayer) {
             WhichPlayer.PLAYERONE -> {
                 view_hexa_element_image.setImageDrawable(ColorizedDrawable.getColorizedDrawable(context, R.drawable.stagbeetle, ContextCompat.getColor(context, R.color.black)))
                 view_hexa_element_layout.background = ContextCompat.getDrawable(context, R.drawable.lightground)
@@ -43,8 +43,18 @@ class Stagbeetle : HexaElement {
         return cellsToDisable
     }
 
-    override fun getCellsToEnable(elements: ArrayList<HexaElement>): ArrayList<HexaCell> {
-        return ArrayList()
+    override fun getCellsToEnable(elements: ArrayList<HexaElement>): ArrayList<HexaElement> {
+        val cellsToEnable = ArrayList<HexaElement>()
+
+        for (it in elements) {
+            if (this.currentRow != null && this.currentCol != null) {
+                if (HexaHelper.checkIfTwoElementsAreNeighbour(it, this)) {
+                    cellsToEnable.add(it)
+                }
+            }
+        }
+
+        return cellsToEnable
     }
 
 }

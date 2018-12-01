@@ -87,7 +87,7 @@ class Spider : HexaElement {
     }
 
 
-    override fun getCellsToEnable(elements: ArrayList<HexaElement>): ArrayList<HexaCell> {
+    override fun getCellsToEnable(elements: ArrayList<HexaElement>): ArrayList<HexaElement> {
         return ArrayList()
     }
 
