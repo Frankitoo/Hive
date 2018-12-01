@@ -7,6 +7,7 @@ import com.example.frankito.hive.R
 import com.example.frankito.hive.model.HexaCell
 import com.example.frankito.hive.ui.view.HexaElement
 import com.example.frankito.hive.util.ColorizedDrawable
+import com.example.frankito.hive.util.HexaHelper
 import kotlinx.android.synthetic.main.view_hexa_element.view.*
 
 class Stagbeetle : HexaElement {
@@ -28,6 +29,21 @@ class Stagbeetle : HexaElement {
     }
 
     override fun getDisableCellsByMoveLogic(availableCells: ArrayList<HexaCell>, elements: ArrayList<HexaElement>): ArrayList<HexaCell> {
+
+        val cellsToDisable = ArrayList<HexaCell>()
+
+        for (it in availableCells) {
+            if (this.currentRow != null && this.currentCol != null) {
+                if (!HexaHelper.checkIfCoordinatesAreNeightbour(it.row, it.col, this.currentRow!!, this.currentCol!!)) {
+                    cellsToDisable.add(it)
+                }
+            }
+        }
+
+        return cellsToDisable
+    }
+
+    override fun getCellsToEnable(elements: ArrayList<HexaElement>): ArrayList<HexaCell> {
         return ArrayList()
     }
 

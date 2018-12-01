@@ -43,4 +43,8 @@ class Queen : HexaElement {
         return cellsToDisable
     }
 
+    override fun getCellsToEnable(elements: ArrayList<HexaElement>): ArrayList<HexaCell> {
+        return ArrayList()
+    }
+
 }
