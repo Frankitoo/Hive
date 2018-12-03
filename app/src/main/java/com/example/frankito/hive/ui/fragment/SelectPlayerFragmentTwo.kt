@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.frankito.hive.R
 import com.example.frankito.hive.model.Player
 import com.example.frankito.hive.ui.activity.MainActivity
@@ -63,7 +64,7 @@ class SelectPlayerFragmentTwo : Fragment() {
 
         if (id == null) {
             val context = activity as AppCompatActivity
-            Snackbar.make(context.currentFocus, getString(R.string.select_player), BaseTransientBottomBar.LENGTH_SHORT).show()
+            Toast.makeText(context, getString(R.string.select_player), Toast.LENGTH_SHORT).show()
         } else {
             playerTwoSelected(id)
             fragmentManager?.beginTransaction()?.remove(this)?.commit()
