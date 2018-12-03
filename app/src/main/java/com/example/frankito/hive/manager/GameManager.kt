@@ -1,5 +1,6 @@
 package com.example.frankito.hive.manager
 
+import android.app.AlertDialog
 import android.content.Context
 import android.support.v4.content.ContextCompat
 import android.widget.Toast
@@ -9,10 +10,7 @@ import com.example.frankito.hive.ui.activity.GameActivity
 import com.example.frankito.hive.ui.view.HexaElement
 import com.example.frankito.hive.ui.view.HexaViewGroup
 import com.example.frankito.hive.ui.view.Insects.*
-import com.example.frankito.hive.util.ColorizedDrawable
-import com.example.frankito.hive.util.DisableDragListener
-import com.example.frankito.hive.util.HexaHelper
-import com.example.frankito.hive.util.MyDragListener
+import com.example.frankito.hive.util.*
 
 class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
 
@@ -457,7 +455,8 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
                 if (it is Queen) {
                     if (it.currentCol != null && it.currentRow != null) {
                         if (countNeighbours(getArrayElementByRowCol(it.currentRow!!, it.currentCol!!)) == 6) {
-                            Toast.makeText(context, "Player 1 has Won the game!", Toast.LENGTH_SHORT).show()
+                            //Toast.makeText(context, "Player 1 has Won the game!", Toast.LENGTH_SHORT).show()
+                            HelperUtilities.playerOneHasWon(context)
                             //Dialog fragment
                         }
                     }
@@ -470,7 +469,8 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
                 if (it is Queen) {
                     if (it.currentCol != null && it.currentRow != null) {
                         if (countNeighbours(getArrayElementByRowCol(it.currentRow!!, it.currentCol!!)) == 6) {
-                            Toast.makeText(context, "Player 2 has Won the game!", Toast.LENGTH_SHORT).show()
+                            //Toast.makeText(context, "Player 2 has Won the game!", Toast.LENGTH_SHORT).show()
+                            HelperUtilities.playerTwoHasWon(context)
                             //Dialog fragment
                         }
                     }

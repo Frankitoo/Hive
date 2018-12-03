@@ -13,6 +13,10 @@
     <string name="add_player">Add player</string>
     <string name="new_player">New player</string>
 
+    <string name="select_player">Select a player!</string>
+
     <string name="add">Add</string>
+
+    <string name="player_win">%1$s has won the game!</string>
 
 </resources>

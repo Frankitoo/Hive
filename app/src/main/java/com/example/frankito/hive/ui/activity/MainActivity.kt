@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         score_button.setOnClickListener {
-            initPlayers()
+            //initPlayers()
 
             val intent = Intent(this@MainActivity, ScoresActivity::class.java)
             startActivity(intent)

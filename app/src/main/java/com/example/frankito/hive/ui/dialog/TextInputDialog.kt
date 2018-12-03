@@ -6,15 +6,22 @@ import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import com.example.frankito.hive.R
+import com.example.frankito.hive.ui.activity.GameActivity
 
 
 fun showAddPlayerDialog(context: Context, nameListener: (String) -> Unit) {
     val title = context.getString(R.string.new_player)
     showTextInputDialog(context, title, null, nameListener)
+}
+
+fun showPlayerWonDialog(playerName: String, context: Context) {
+    val title = context.getString(R.string.player_win, playerName)
+    showTextDialog(context, title)
 }
 
 private fun showTextInputDialog(context: Context, title: String?, text: String?, inputTextListener: (String) -> Unit) {
@@ -36,7 +43,7 @@ private fun showTextInputDialog(context: Context, title: String?, text: String?,
 
 
     val addPlayerButton = dialogView.findViewById<Button>(R.id.add_new_player_button)
-    addPlayerButton.setOnClickListener{
+    addPlayerButton.setOnClickListener {
         inputTextListener(etName.text.toString())
         createdDialog.dismiss()
     }
@@ -51,4 +58,30 @@ private fun showTextInputDialog(context: Context, title: String?, text: String?,
         }
     })
 
+}
+
+private fun showTextDialog(context: Context, title: String?) {
+
+    val dialog = AlertDialog.Builder(context)
+    val inflater = LayoutInflater.from(context)
+
+    val dialogView = inflater.inflate(R.layout.dialog_add_player, null)
+    dialog.setView(dialogView)
+
+    val etTitle = dialogView.findViewById<TextView>(R.id.etTitle)
+    etTitle.text = title
+
+    val etName = dialogView.findViewById<EditText>(R.id.etName)
+    etName.visibility = View.GONE
+
+    val createdDialog = dialog.create() as AlertDialog
+    createdDialog.show()
+
+    val addPlayerButton = dialogView.findViewById<Button>(R.id.add_new_player_button)
+    addPlayerButton.text = "OK"
+    addPlayerButton.setOnClickListener {
+        createdDialog.dismiss()
+        val mContext = context as GameActivity
+        mContext.finish()
+    }
 }

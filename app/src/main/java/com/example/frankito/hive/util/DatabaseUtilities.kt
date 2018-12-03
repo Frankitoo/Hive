@@ -28,7 +28,7 @@ class DatabaseUtilities {
                     nextId = currentIdNum.toInt() + 1
                 }
 
-                val player = Player(nextId,playerName,0)
+                val player = Player(nextId, playerName, 0)
                 it.insertOrUpdate(player)
             }
         }
@@ -39,9 +39,21 @@ class DatabaseUtilities {
 
         Realm.getDefaultInstance().use {
             it.executeTransaction {
-                val players = it.where(Player::class.java).findAll()
-                players.deleteAllFromRealm()
                 it.insertOrUpdate(playerList)
+            }
+        }
+    }
+
+    fun playerWinnedUpdate(playerId: Int) {
+        Realm.getDefaultInstance().use {
+            it.executeTransaction {
+                val player = it.where(Player::class.java).equalTo("id", playerId).findFirst()
+                if (player != null) {
+                    if(player.score != null) {
+                        player.score = player.score!! + 100
+                        it.copyToRealmOrUpdate(player)
+                    }
+                }
             }
         }
     }

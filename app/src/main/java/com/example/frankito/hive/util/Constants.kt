@@ -13,4 +13,8 @@ object Constants {
     const val BROWNGROUND = "brownGround"
     const val NEUTRALGROUND = "neutralGround"
 
+    const val SHARED_PREFERENCES_NAME: String = "1111"
+    const val SELECTED_PLAYER_ONE: String = "5001"
+    const val SELECTED_PLAYER_TWO: String = "5002"
+
 }
