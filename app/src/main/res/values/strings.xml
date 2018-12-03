@@ -2,5 +2,17 @@
     <string name="app_name">Hive</string>
 
     <string name="play">PLAY</string>
+    <string name="scores">SCORES</string>
     <string name="quit">QUIT</string>
+
+    <string name="select_player_one">Select First Player</string>
+    <string name="select_player_two">Select Second Player</string>
+
+    <string name="select">Select</string>
+    <string name="start">Start</string>
+    <string name="add_player">Add player</string>
+    <string name="new_player">New player</string>
+
+    <string name="add">Add</string>
+
 </resources>

@@ -46,7 +46,12 @@
     <color name="secondPlayerBackground">#0074D9</color>
     <color name="firstPlayerBackground">#0074D9</color>
 
+    <color name="home_gray_light">#5a5a5a</color>
+    <color name="home_gray_medium">#454545</color>
+    <color name="home_gray_dark">#303030</color>
 
+    <color name="colorPrimaryNew">#5a5a5a</color>
+    <color name="colorPrimaryNewDark">#454545</color>
 
 </resources>
 

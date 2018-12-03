@@ -12,9 +12,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@color/backgroundGray"
+        android:background="@color/home_gray_light"
         android:text="@string/play"
-        android:textColor="@android:color/black"
+        android:textColor="@color/white"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/score_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@color/home_gray_medium"
+        android:text="@string/scores"
+        android:textColor="@color/white"
         android:textSize="30sp" />
 
     <Button
@@ -22,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@android:color/black"
+        android:background="@color/home_gray_dark"
         android:text="@string/quit"
         android:textColor="@color/white"
         android:textSize="30sp" />

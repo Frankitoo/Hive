@@ -11,6 +11,7 @@ import com.example.frankito.hive.ui.view.HexaElement
 import com.example.frankito.hive.ui.view.HexaViewGroup
 import com.example.frankito.hive.ui.view.Insects.*
 import com.example.frankito.hive.util.DisableDragListener
+import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_game.*
 
 
@@ -47,12 +48,16 @@ class GameActivity : AppCompatActivity() {
 
     private lateinit var gameManager: GameManager
 
+    private lateinit var realm : Realm
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
 
         viewHolder = Viewholder()
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+
+        realm = Realm.getDefaultInstance()
 
         initLayouts()
 
