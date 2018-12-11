@@ -23,7 +23,7 @@ class GameActivity : AppCompatActivity() {
 
     inner class Viewholder {
 
-        internal val hexaGrid = findViewById<HexaViewGroup>(R.id.hexa_grid)
+        //internal val hexaGrid = findViewById<HexaViewGroup>(R.id.hexa_grid)
 
         internal val firstPlayerScrollView = findViewById<ScrollView>(R.id.first_player_scroll)
         internal val secondPlayerScrollView = findViewById<ScrollView>(R.id.second_player_scroll)
@@ -69,7 +69,11 @@ class GameActivity : AppCompatActivity() {
 
         initLayouts()
 
-        gameManager = GameManager(this@GameActivity, viewHolder.hexaGrid)
+
+        val hexaGrid = HexaViewGroup(this@GameActivity)
+        hexa_grid_layout.addView(hexaGrid)
+
+        gameManager = GameManager(this@GameActivity, hexaGrid)
         gameManager.initGame()
 
     }
