@@ -7,6 +7,8 @@ import android.widget.LinearLayout
 import android.widget.ScrollView
 import com.example.frankito.hive.R
 import com.example.frankito.hive.manager.GameManager
+import com.example.frankito.hive.ui.fragment.GameMenuFragment
+import com.example.frankito.hive.ui.fragment.SelectPlayerFragment
 import com.example.frankito.hive.ui.view.HexaElement
 import com.example.frankito.hive.ui.view.HexaViewGroup
 import com.example.frankito.hive.ui.view.Insects.*
@@ -58,6 +60,12 @@ class GameActivity : AppCompatActivity() {
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
         realm = Realm.getDefaultInstance()
+
+        btnMenu.setOnClickListener {
+            val fm = supportFragmentManager
+            val gameMenuFragment = GameMenuFragment.newInstance()
+            gameMenuFragment.show(fm ,"fragment_game_menu")
+        }
 
         initLayouts()
 

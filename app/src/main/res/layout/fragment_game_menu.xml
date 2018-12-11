@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/menu_restart_button"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gray_button_style"
+        android:minHeight="120dp"
+        android:minWidth="120dp"
+        android:text="@string/restart"
+        android:textColor="@color/white"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/menu_scores_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/home_gray_medium"
+        android:text="@string/scores"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/menu_end_game_button"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dark_gray_button_sytle"
+        android:minHeight="120dp"
+        android:minWidth="120dp"
+        android:text="@string/endgame"
+        android:textColor="@color/white"
+        android:textSize="30sp" />
+</LinearLayout>
