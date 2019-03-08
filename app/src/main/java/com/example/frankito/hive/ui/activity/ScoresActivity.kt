@@ -1,43 +1,43 @@
 package com.example.frankito.hive.ui.activity
 
-import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import com.example.frankito.hive.R
 import com.example.frankito.hive.model.Player
 import com.example.frankito.hive.ui.adapter.ScoresRecyclerAdapter
+import com.example.frankito.hive.ui.base.BaseActivity
 import io.realm.Realm
+import kotlinx.android.synthetic.main.activity_scores.*
 
-class ScoresActivity : AppCompatActivity() {
+fun startScoresActivity(activity: BaseActivity) {
+    val intent = Intent(activity, ScoresActivity::class.java)
+    activity.startActivity(intent)
+}
 
-    inner class ViewHolder {
-        internal val scoresRecycler = findViewById<RecyclerView>(R.id.scores_recycler)
-    }
+class ScoresActivity : BaseActivity() {
 
-    private lateinit var viewHolder: ViewHolder
     private lateinit var realm: Realm
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_scores)
+    override fun getContentView() = R.layout.activity_scores
 
-        viewHolder = ViewHolder()
+    override fun initUi() {
         realm = Realm.getDefaultInstance()
-
         initScoresRecycler()
     }
 
+    //TODO database call
     private fun initScoresRecycler() {
         val players = realm.where(Player::class.java).findAll() as List<Player>
 
         val sortedPlayers = players.sortedByDescending { it.score }
-        viewHolder.scoresRecycler.layoutManager = LinearLayoutManager(this@ScoresActivity)
+        scores_recycler.layoutManager = LinearLayoutManager(this@ScoresActivity)
+
         val adapter = ScoresRecyclerAdapter(sortedPlayers, this@ScoresActivity)
-        viewHolder.scoresRecycler.adapter = adapter
+        scores_recycler.adapter = adapter
 
     }
 
+    //TODO database close
     override fun onDestroy() {
         realm.close()
         super.onDestroy()

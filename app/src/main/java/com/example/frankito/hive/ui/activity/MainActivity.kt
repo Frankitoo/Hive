@@ -1,48 +1,39 @@
 package com.example.frankito.hive.ui.activity
 
-import android.content.Intent
-import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.view.WindowManager
 import com.example.frankito.hive.R
 import com.example.frankito.hive.manager.GameManager
 import com.example.frankito.hive.model.Player
+import com.example.frankito.hive.ui.base.BaseActivity
 import com.example.frankito.hive.ui.fragment.SelectPlayerFragment
 import com.example.frankito.hive.ui.view.HexaElement
 import com.example.frankito.hive.util.DatabaseUtilities
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+    override fun getContentView() = R.layout.activity_main
 
-        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
-
+    override fun initUi() {
+        initPlayers()
         play_button.setOnClickListener {
             val fm = supportFragmentManager
             val selectPlayerFragment = SelectPlayerFragment.newInstance()
-            selectPlayerFragment.show(fm ,"fragment_select_player")
+            selectPlayerFragment.show(fm, "fragment_select_player")
         }
 
         score_button.setOnClickListener {
             //initPlayers()
-
-            val intent = Intent(this@MainActivity, ScoresActivity::class.java)
-            startActivity(intent)
+            startScoresActivity(this)
         }
 
         quit_button.setOnClickListener {
             finish()
         }
-
     }
 
-    fun startGame(){
+    fun startGame() {
         GameManager.currentPlayer = HexaElement.WhichPlayer.PLAYERONE
-        val intent = Intent(this@MainActivity, GameActivity::class.java)
-        startActivity(intent)
+        startGameActivity(this)
     }
 
     private fun initPlayers() {
@@ -56,11 +47,11 @@ class MainActivity : AppCompatActivity() {
         DatabaseUtilities.instance.initPlayers(players)
     }
 
-    private fun playerOneSelected(id: Int){
+    private fun playerOneSelected(id: Int) {
 
     }
 
-    private fun playerTwoSelected(id: Int){
+    private fun playerTwoSelected(id: Int) {
 
     }
 }

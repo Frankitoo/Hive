@@ -11,11 +11,12 @@ import android.widget.TextView
 import com.example.frankito.hive.R
 import com.example.frankito.hive.model.Player
 
-class PlayerSelectRecyclerAdapter(private val dataset: List<Player>, private val context: Context) : RecyclerView.Adapter<PlayerSelectRecyclerAdapter.ViewHolder>() {
+class PlayerSelectRecyclerAdapter(private val context: Context) : RecyclerView.Adapter<PlayerSelectRecyclerAdapter.ViewHolder>() {
 
-
-    private var checkboxList = ArrayList<CheckBox>()
+    var checkboxList = ArrayList<CheckBox>()
     var selectedPlayerId: Int? = null
+
+    var data: List<Player>? = null
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         internal var playerName: TextView = itemView.findViewById(R.id.item_player_name)
@@ -24,7 +25,7 @@ class PlayerSelectRecyclerAdapter(private val dataset: List<Player>, private val
     }
 
     override fun getItemCount(): Int {
-        return dataset.size
+        return data?.size ?: 0
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlayerSelectRecyclerAdapter.ViewHolder {
@@ -34,19 +35,19 @@ class PlayerSelectRecyclerAdapter(private val dataset: List<Player>, private val
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        val item = dataset[position]
+        val item = data?.get(position)
 
-        holder.playerName.text = item.name
-
-        checkboxList.add(holder.itemCheckBox)
+        holder.playerName.text = item?.name
 
         holder.itemLayout.isClickable = true
+
+        checkboxList.add(holder.itemCheckBox)
 
         holder.itemCheckBox.isClickable = false
 
         holder.itemLayout.setOnClickListener {
             setCheckBoxes(position)
-            selectedPlayerId = item.id
+            selectedPlayerId = item?.id
             //HelperUtilities.storeBeerId(context, selectedBeerId)
         }
 
@@ -54,11 +55,8 @@ class PlayerSelectRecyclerAdapter(private val dataset: List<Player>, private val
 
     private fun setCheckBoxes(position: Int) {
         for (it in checkboxList.indices) {
-            if (it == position) {
-                checkboxList[it].isChecked = true
-            } else {
-                checkboxList[it].isChecked = false
-            }
+            checkboxList[it].isChecked = (it == position)
         }
     }
+
 }

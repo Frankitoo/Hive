@@ -39,6 +39,7 @@ class DatabaseUtilities {
 
         Realm.getDefaultInstance().use {
             it.executeTransaction {
+                it.where(Player::class.java).findAll().deleteAllFromRealm()
                 it.insertOrUpdate(playerList)
             }
         }

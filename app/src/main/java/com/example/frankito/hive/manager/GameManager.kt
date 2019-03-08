@@ -1,9 +1,7 @@
 package com.example.frankito.hive.manager
 
-import android.app.AlertDialog
 import android.content.Context
 import android.support.v4.content.ContextCompat
-import android.widget.Toast
 import com.example.frankito.hive.R
 import com.example.frankito.hive.model.HexaCell
 import com.example.frankito.hive.ui.activity.GameActivity
