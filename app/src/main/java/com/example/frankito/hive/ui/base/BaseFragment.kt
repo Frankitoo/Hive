@@ -15,7 +15,7 @@ abstract class BaseFragment : Fragment() {
 
     protected abstract fun getLayoutRes(): Int
 
-    private var rxHandler = RxHandler()
+    var rxHandler = RxHandler()
     private var uiManager = UiManager.sharedInstance
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

@@ -454,7 +454,7 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
                     if (it.currentCol != null && it.currentRow != null) {
                         if (countNeighbours(getArrayElementByRowCol(it.currentRow!!, it.currentCol!!)) == 6) {
                             //Toast.makeText(context, "Player 1 has Won the game!", Toast.LENGTH_SHORT).show()
-                            HelperUtilities.playerOneHasWon(context)
+                            PlayersManager.sharedInstance.playerOneHasWon(context)
                             //Dialog fragment
                         }
                     }
@@ -468,7 +468,7 @@ class GameManager(val context: Context, val hexaViewGroup: HexaViewGroup) {
                     if (it.currentCol != null && it.currentRow != null) {
                         if (countNeighbours(getArrayElementByRowCol(it.currentRow!!, it.currentCol!!)) == 6) {
                             //Toast.makeText(context, "Player 2 has Won the game!", Toast.LENGTH_SHORT).show()
-                            HelperUtilities.playerTwoHasWon(context)
+                            PlayersManager.sharedInstance.playerTwoHasWon(context)
                             //Dialog fragment
                         }
                     }

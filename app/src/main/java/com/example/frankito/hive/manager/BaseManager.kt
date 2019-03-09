@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 
 abstract class BaseManager {
 
-    protected open val dbSharedPreferences = "db_bike_gps"
+    protected open val dbSharedPreferences = "db_hive"
 
     protected fun resetSharedPreferences(context: Context) {
         getSharedPreferences(context).edit().clear().apply()

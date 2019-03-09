@@ -9,7 +9,9 @@ import android.widget.TextView
 import com.example.frankito.hive.R
 import com.example.frankito.hive.model.Player
 
-class ScoresRecyclerAdapter(private val dataset: List<Player>, private val context: Context) : RecyclerView.Adapter<ScoresRecyclerAdapter.ViewHolder>() {
+class ScoresRecyclerAdapter(private val context: Context) : RecyclerView.Adapter<ScoresRecyclerAdapter.ViewHolder>() {
+
+    var data: List<Player>? = null
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         internal var playerNameText: TextView = itemView.findViewById(R.id.item_player_name_text)
@@ -17,7 +19,7 @@ class ScoresRecyclerAdapter(private val dataset: List<Player>, private val conte
     }
 
     override fun getItemCount(): Int {
-        return dataset.size
+        return data?.size ?: 0
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScoresRecyclerAdapter.ViewHolder {
@@ -27,10 +29,13 @@ class ScoresRecyclerAdapter(private val dataset: List<Player>, private val conte
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        val item = dataset[position]
+        val item = data?.get(position)
 
-        holder.playerNameText.text = item.name
-        holder.scoreText.text = item.score.toString() + " pont"
+        holder.playerNameText.text = item?.name
+
+        val scoreText = item?.score.toString() + " pont"
+
+        holder.scoreText.text = scoreText
 
     }
 

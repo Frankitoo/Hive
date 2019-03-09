@@ -16,7 +16,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     abstract fun initUi()
 
-    private var rxHandler = RxHandler()
+    var rxHandler = RxHandler()
     val uiManager = UiManager.sharedInstance
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,4 +1,4 @@
-package com.example.frankito.hive.ui.fragment
+package com.example.frankito.hive.ui.fragment.SelectPlayerFragments
 
 import android.support.v4.view.ViewPager
 import com.example.frankito.hive.R

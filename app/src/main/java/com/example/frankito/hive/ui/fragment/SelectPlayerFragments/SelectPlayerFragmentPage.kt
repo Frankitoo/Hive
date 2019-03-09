@@ -1,6 +1,5 @@
 package com.example.frankito.hive.ui.fragment.SelectPlayerFragments
 
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.widget.Toast
 import com.example.frankito.hive.R
@@ -8,8 +7,7 @@ import com.example.frankito.hive.manager.PlayersManager
 import com.example.frankito.hive.ui.adapter.PlayerSelectRecyclerAdapter
 import com.example.frankito.hive.ui.base.BaseFragment
 import com.example.frankito.hive.ui.dialog.showAddPlayerDialog
-import com.example.frankito.hive.ui.fragment.SelectPlayerFragment
-import kotlinx.android.synthetic.main.fragment_select_player_one.*
+import kotlinx.android.synthetic.main.fragment_select_player_page.*
 
 abstract class SelectPlayerFragmentPage : BaseFragment() {
 
@@ -23,8 +21,9 @@ abstract class SelectPlayerFragmentPage : BaseFragment() {
         recycler.layoutManager = LinearLayoutManager(context)
 
         val adapter = PlayerSelectRecyclerAdapter(context!!)
+        recycler.adapter = adapter
 
-        playerManager.subscribeForPlayer {
+        playerManager.subscribeForPlayer(rxHandler) {
             adapter.data = it
         }
 
@@ -32,18 +31,15 @@ abstract class SelectPlayerFragmentPage : BaseFragment() {
             selectPlayer(adapter.selectedPlayerId)
         }
 
-        recycler.adapter = adapter
-
         add_new_player_button.setOnClickListener {
             showAddPlayerDialog(context!!) { playerName ->
-                playerManager.addPlayer(playerName)
+                playerManager.addPlayer(rxHandler, playerName)
             }
         }
     }
 
     private fun selectPlayer(id: Int? = null) {
         if (id == null) {
-            val context = activity as AppCompatActivity
             Toast.makeText(context, getString(R.string.select_player), Toast.LENGTH_SHORT).show()
         } else {
             playerSelected(id)
@@ -53,6 +49,5 @@ abstract class SelectPlayerFragmentPage : BaseFragment() {
             val parentActivity = parentFragment as SelectPlayerFragment
             parentActivity.turnPage()
         }
-
     }
 }

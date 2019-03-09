@@ -12,7 +12,6 @@ abstract class BaseRealmManager<REALM_OBJECT, ID_TYPE> :
     protected abstract fun getTypeClass(): Class<REALM_OBJECT>
 
     private var realm: Realm? = null
-    private var rxHandler = RxHandler()
 
     fun getRealm(): Realm {
         if (realm == null || realm!!.isClosed) {
@@ -23,10 +22,9 @@ abstract class BaseRealmManager<REALM_OBJECT, ID_TYPE> :
 
     private fun close() {
         realm?.close()
-        rxHandler.clear()
     }
 
-    protected fun subscribeToObjects(listener: ((List<REALM_OBJECT>) -> Unit)) {
+    protected fun subscribeToObjects(rxHandler: RxHandler, listener: ((List<REALM_OBJECT>) -> Unit)) {
         rxHandler.subscribe(
                 Realm.getDefaultInstance()
                         .where(getTypeClass())
@@ -34,7 +32,7 @@ abstract class BaseRealmManager<REALM_OBJECT, ID_TYPE> :
                         .asFlowable(), listener)
     }
 
-    protected fun addElement(element: REALM_OBJECT?) {
+    protected fun addElement(rxHandler: RxHandler, element: REALM_OBJECT?) {
         element ?: return
         rxHandler.callAsync(
                 Observable.fromCallable {

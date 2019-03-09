@@ -3,10 +3,9 @@ package com.example.frankito.hive.ui.activity
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import com.example.frankito.hive.R
-import com.example.frankito.hive.model.Player
+import com.example.frankito.hive.manager.PlayersManager
 import com.example.frankito.hive.ui.adapter.ScoresRecyclerAdapter
 import com.example.frankito.hive.ui.base.BaseActivity
-import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_scores.*
 
 fun startScoresActivity(activity: BaseActivity) {
@@ -16,30 +15,24 @@ fun startScoresActivity(activity: BaseActivity) {
 
 class ScoresActivity : BaseActivity() {
 
-    private lateinit var realm: Realm
+    var playerManager = PlayersManager.sharedInstance
 
     override fun getContentView() = R.layout.activity_scores
 
     override fun initUi() {
-        realm = Realm.getDefaultInstance()
         initScoresRecycler()
     }
 
-    //TODO database call
     private fun initScoresRecycler() {
-        val players = realm.where(Player::class.java).findAll() as List<Player>
 
-        val sortedPlayers = players.sortedByDescending { it.score }
-        scores_recycler.layoutManager = LinearLayoutManager(this@ScoresActivity)
-
-        val adapter = ScoresRecyclerAdapter(sortedPlayers, this@ScoresActivity)
+        scores_recycler.layoutManager = LinearLayoutManager(this)
+        val adapter = ScoresRecyclerAdapter(this)
         scores_recycler.adapter = adapter
 
-    }
+        playerManager.subscribeForPlayer(rxHandler) {
+            val sortedPlayers = it.sortedByDescending { it.score }
+            adapter.data = sortedPlayers
+        }
 
-    //TODO database close
-    override fun onDestroy() {
-        realm.close()
-        super.onDestroy()
     }
 }
