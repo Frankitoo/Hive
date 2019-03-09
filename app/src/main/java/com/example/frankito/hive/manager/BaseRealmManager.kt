@@ -37,7 +37,7 @@ abstract class BaseRealmManager<REALM_OBJECT, ID_TYPE> :
         rxHandler.callAsync(
                 Observable.fromCallable {
                     Realm.getDefaultInstance().executeTransaction {
-                        val currentIdNum = it.where(getTypeClass()).max("id")
+                        val currentIdNum = getBaseQuery(it).max("id")
                         val nextId: Int
                         if (currentIdNum == null) {
                             nextId = 1
